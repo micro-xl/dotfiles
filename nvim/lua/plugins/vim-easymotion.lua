@@ -1,0 +1,1 @@
+-- set global variable for easymotion "let g:EasyMotion_do_mapping = 0"
