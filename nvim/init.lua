@@ -260,6 +260,15 @@ do
   })
 end
 
+--------------------------------
+---          buffers          --
+--------------------------------
+do
+  require('buffers').setup({
+    command = 'Buffers',
+    keymap = '<TAB>'
+  })
+end
 
 -- below legacy
 

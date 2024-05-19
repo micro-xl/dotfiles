@@ -15,7 +15,6 @@ local function cd_to_bookmark(file_path)
     vim.notify('[CWD] ' .. picked[1])
     vim.cmd('cd ' .. picked[1])
   end)
-
 end
 
 -- @params {table} opts
@@ -29,9 +28,11 @@ mod.setup = function(opts)
   asserter.non_empty_string(opts.open_command, 'opts.open_command')
   asserter.non_empty_string(opts.keymap_open, 'opts.keymap_open')
   asserter.non_empty_string(opts.edit_command, 'opts.edit_command')
+
   vim.api.nvim_create_user_command(opts.open_command, function() cd_to_bookmark(opts.bookmarks_file_path) end, {})
   vim.api.nvim_create_user_command(opts.edit_command, function() vim.cmd('e ' .. opts.bookmarks_file_path) end, {})
-  vim.api.nvim_set_keymap('n', opts.keymap_open, ':Bookmarks<CR>', { noremap = true, silent = true })
+
+  vim.api.nvim_set_keymap('n', opts.keymap_open, ':' .. opts.open_command .. '<CR>', { noremap = true, silent = true })
 end
 
 return mod;

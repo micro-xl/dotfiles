@@ -4,7 +4,6 @@ local h_string = require('h-string')
 local h_list = require('h-list')
 local fz = require('fzf-wrapper');
 local exec = require('h-shell').exec
-local pipe = require('h-function').pipe
 local get_icon = require('nvim-web-devicons').get_icon
 
 local mod = {}
@@ -37,6 +36,7 @@ mod.find_file = function(opts)
   end)
 end
 
+
 -- @params {table} opts
 -- @params {table} opts.excludes
 -- @params {string} opts.command
@@ -51,7 +51,8 @@ mod.setup = function(opts)
       excludes = opts.excludes
     })
   end, {})
-  vim.api.nvim_set_keymap('n', opts.keymap, ':FindFile<CR>', { noremap = true, silent = true })
+
+  vim.api.nvim_set_keymap('n', opts.keymap, ':' .. opts.command .. '<CR>', { noremap = true, silent = true })
 end
 
 return mod;

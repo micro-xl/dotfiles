@@ -16,14 +16,13 @@ mod.reduce = function(table, callback, initial_value)
   return acc
 end
 
-mod.filter = function(table, predicate)
-  local new_table = {}
-  for k, v in pairs(table) do
+mod.filter = function(_table, predicate)
+  return mod.reduce(_table, function(acc, v, k)
     if predicate(v, k) then
-      new_table[k] = v
+      table.insert(acc, v)
     end
-  end
-  return new_table
+    return acc
+  end, {})
 end
 
 mod.find = function(table, predicate)
