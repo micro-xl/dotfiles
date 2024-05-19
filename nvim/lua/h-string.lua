@@ -37,11 +37,13 @@ end
 ---@param {string} str
 ---@param {string} delimiter-pattern
 mod.split = function(str, delimiter)
-  local result = {}
-  for match in (str .. delimiter):gmatch('(.-)' .. delimiter) do
-    table.insert(result, match)
+  local parts = {}
+  local i = 1
+  for part in string.gmatch(str, '([^' .. delimiter .. ']+)') do
+    table.insert(parts, part)
+    i = i + 1
   end
-  return result
+  return parts
 end
 
 ---@param str string

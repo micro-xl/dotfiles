@@ -30,12 +30,9 @@ mod.find_file = function(opts)
   fz.with_fzf(function(fzf)
     local picked = fzf(sources)
 
-    local extract_path = pipe(
-      function(item) return h_string.split(item, ' ') end,
-      function(parts) return h_list.slice(parts, 2) end,
-      function(parts) return h_list.join(parts, '') end
-    )
-
+    local extract_path = function(item)
+      return h_string.replace(item, get_icon(item) .. ' ', '')
+    end
     vim.cmd('e ' .. pwd_stdout .. '/' .. extract_path(picked[1]))
   end)
 end
