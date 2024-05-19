@@ -67,6 +67,7 @@ vim.keymap.set('n', '<C-w>z', toggle_zoom, { silent = true })
 vim.keymap.set('t', '<C-a>z', toggle_zoom, { silent = true })
 
 
+
 -- buffer Navigation
 local function until_not_terminal(command)
   local function recursiveFunc()

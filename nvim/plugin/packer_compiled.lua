@@ -169,6 +169,11 @@ _G.packer_plugins = {
     path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
+  ["hardtime.nvim"] = {
+    loaded = true,
+    path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/hardtime.nvim",
+    url = "https://github.com/m4xshen/hardtime.nvim"
+  },
   indentLine = {
     loaded = true,
     path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/indentLine",
@@ -194,10 +199,10 @@ _G.packer_plugins = {
     path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/markdown-preview.nvim",
     url = "https://github.com/iamcco/markdown-preview.nvim"
   },
-  ["messages.nvim"] = {
+  ["neoscroll.nvim"] = {
     loaded = true,
-    path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/messages.nvim",
-    url = "https://github.com/AckslD/messages.nvim"
+    path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/neoscroll.nvim",
+    url = "https://github.com/karb94/neoscroll.nvim"
   },
   ["nui.nvim"] = {
     loaded = true,
@@ -224,11 +229,6 @@ _G.packer_plugins = {
     path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/nvim-comment",
     url = "https://github.com/terrortylor/nvim-comment"
   },
-  ["nvim-dap"] = {
-    loaded = true,
-    path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/nvim-dap",
-    url = "https://github.com/mfussenegger/nvim-dap"
-  },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
@@ -238,11 +238,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/nvim-notify",
     url = "https://github.com/rcarriga/nvim-notify"
-  },
-  ["nvim-teal-maker"] = {
-    loaded = true,
-    path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/nvim-teal-maker",
-    url = "https://github.com/svermeulen/nvim-teal-maker"
   },
   ["nvim-tree.lua"] = {
     loaded = true,
@@ -258,6 +253,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/nvim-tree/nvim-web-devicons"
+  },
+  ["oil.nvim"] = {
+    loaded = true,
+    path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/oil.nvim",
+    url = "https://github.com/stevearc/oil.nvim"
   },
   onehalf = {
     loaded = true,
@@ -304,6 +304,11 @@ _G.packer_plugins = {
     path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
     url = "https://github.com/folke/tokyonight.nvim"
   },
+  ["vim-easymotion"] = {
+    loaded = true,
+    path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/vim-easymotion",
+    url = "https://github.com/easymotion/vim-easymotion"
+  },
   ["vim-endwise"] = {
     loaded = true,
     path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/vim-endwise",
@@ -318,11 +323,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/vim-system-copy",
     url = "https://github.com/christoomey/vim-system-copy"
-  },
-  ["vim-teal"] = {
-    loaded = true,
-    path = "/Users/jinkyuhan/.local/share/nvim/site/pack/packer/start/vim-teal",
-    url = "https://github.com/teal-language/vim-teal"
   },
   ["vscode.nvim"] = {
     loaded = true,

@@ -1,7 +1,9 @@
+local asserter = require('asserter')
 local htable = {}
 
-htable.find = function(table, val)
-  for k, v in pairs(table) do
+htable.find = function(t, val)
+  asserter.table(t, 'table')
+  for k, v in pairs(t) do
     if v == val then
       return k
     end
@@ -9,8 +11,10 @@ htable.find = function(table, val)
   return nil
 end
 
-htable.includes = function(table, val)
-  return htable.find(table, val) ~= nil
+htable.includes = function(t, val)
+  asserter.table(t, 'table')
+
+  return htable.find(t, val) ~= nil
 end
 
 return {

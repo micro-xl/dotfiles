@@ -19,9 +19,6 @@ end
 ---@param idx number
 ---@param new_char string
 mod.replace_char_by_index = function(str, idx, new_char)
-  if new_char:len() ~= 1 then
-    error('new_char must be a single character')
-  end
   return string.sub(str, 1, idx - 1) .. new_char .. string.sub(str, idx + 1)
 end
 
@@ -37,6 +34,16 @@ mod.replace = function(str, lua_pattern, replacement)
   return string.gsub(str, lua_pattern, replacement)
 end
 
+---@param {string} str
+---@param {string} delimiter-pattern
+mod.split = function(str, delimiter)
+  local result = {}
+  for match in (str .. delimiter):gmatch('(.-)' .. delimiter) do
+    table.insert(result, match)
+  end
+  return result
+end
+
 ---@param str string
 mod.escape_double_quote = function(str)
   return string.gsub(str, '"', '\\"')
@@ -50,6 +57,16 @@ end
 ---@param str string
 mod.escape_question_mark = function(str)
   return string.gsub(str, '%?', '\\?')
+end
+
+---@param str string
+mod.escape_dash_sign = function(str)
+  return string.gsub(str, '%-', '\\-')
+end
+
+---@param str string
+mod.includes = function(str, pattern)
+  return string.find(str, pattern) ~= nil
 end
 
 return mod;

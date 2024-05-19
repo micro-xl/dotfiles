@@ -4,6 +4,120 @@ DEBUG = {
 }
 
 
+--------------------------------
+--          prequire          --
+--------------------------------
+local require = require('prequire').prequire
+
+--------------------------------
+--        plugin-load         --
+--------------------------------
+do
+  vim.cmd [[packadd packer.nvim]]
+  local packer = require('packer')
+  -- local use_rocks = packer.use_rocks;
+  packer.startup(function(use)
+    use('wbthomason/packer.nvim')
+    use('dense-analysis/ale')
+    use('tpope/vim-endwise')
+    use('rebelot/kanagawa.nvim')
+    use('rcarriga/nvim-notify')
+    use('neovim/nvim-lspconfig')           -- configs for the nvim native LSP client.
+    use('nvim-lua/plenary.nvim')           -- lua util function set like loadash in javascript
+    use('jose-elias-alvarez/null-ls.nvim') -- null language server to provides neovim's language server for extending other language server
+    use('L3MON4D3/LuaSnip');
+    use('saadparwaiz1/cmp_luasnip')
+    use('hrsh7th/nvim-cmp')
+    use('hrsh7th/cmp-nvim-lsp')
+    use('hrsh7th/cmp-nvim-lua')
+    use('hrsh7th/cmp-buffer')
+    use('hrsh7th/cmp-path')
+    use('hrsh7th/cmp-cmdline')
+    use('f3fora/cmp-spell')
+    use('vijaymarupudi/nvim-fzf')
+    use('junegunn/fzf')
+    use('junegunn/fzf.vim')
+    use({
+      'j-hui/fidget.nvim',
+    }) -- ui for LSP server
+    use('nvim-tree/nvim-web-devicons')
+    use('nvim-tree/nvim-tree.lua')
+    use('christoomey/vim-system-copy')
+    use('terrortylor/nvim-comment')
+    use({
+      'sonph/onehalf',
+      rtp = 'vim/'
+    })
+    use('windwp/nvim-autopairs')
+    use('luochen1990/rainbow')
+    use('github/copilot.vim')
+    use('folke/todo-comments.nvim')
+    use('Yggdroot/indentLine')
+    use('lewis6991/gitsigns.nvim')
+    use('nvim-lualine/lualine.nvim')
+    use({
+      'Theyashsawarkar/bufferline.nvim',
+      tag = '*',
+      require = 'nvim-tree/nvim-web-devicons'
+    })
+    use('hood/popui.nvim')
+    use('tpope/vim-fugitive')
+    use('APZelos/blamer.nvim')
+    use('nvim-telescope/telescope.nvim')
+    use({
+      'nvim-telescope/telescope-fzf-native.nvim',
+      run = 'make',
+      requires = { 'nvim-telescope/telescope.nvim' },
+    })
+    use({ 'tzachar/fuzzy.nvim', requires = { 'nvim-telescope/telescope-fzf-native.nvim' } })
+    use({
+      'tzachar/cmp-fuzzy-path',
+      requires = { 'hrsh7th/nvim-cmp', 'tzachar/fuzzy.nvim', 'junegunn/fzf.vim' }
+    })
+    use({
+      'tzachar/cmp-fuzzy-buffer',
+      requires = { 'hrsh7th/nvim-cmp', 'tzachar/fuzzy.nvim' }
+    })
+    use({
+      'nvim-treesitter/nvim-treesitter',
+      run = ':tsupdate'
+    })
+    use({
+      'iamcco/markdown-preview.nvim',
+      run = 'cd app && yarn install'
+    })
+    use('MunifTanjim/nui.nvim')
+    use({ "stevearc/oil.nvim" })
+    use({ "karb94/neoscroll.nvim" })
+    use({
+      "m4xshen/hardtime.nvim",
+      dependencies = {
+        "MunifTanjim/nui.nvim",
+        "nvim-lua/plenary.nvim"
+      },
+      opts = {}
+    })
+    use("easymotion/vim-easymotion")
+    -- use('marko-cerovac/material.nvim')
+    -- use('bluz71/vim-moonfly-colors')
+    -- use('nyoom-engineering/oxocarbon.nvim')
+    -- use('Shatur/neovim-ayu')
+    -- use_rocks({ 'rxlua' });
+    -- use_rocks({ 'penlight' });
+  end);
+end
+
+--------------------------------
+---          notify          ---
+--------------------------------
+do
+  vim.notify = require('notify')
+  vim.notify.setup({
+    render = 'default', -- 'default' | 'minimal' | 'compact'
+    opacity = 0.4
+  })
+end
+
 
 --------------------------------
 --        vim-options         --
@@ -42,132 +156,115 @@ do
   vim.opt.showcmd = true
   vim.opt.langmap = 'ㅁa,ㅠb,ㅊc,ㅇd,ㄷe,ㄹf,ㅎg,ㅗh,ㅑi,ㅓj,ㅏk,ㅣl,ㅡm,ㅜn,ㅐo,ㅔp,ㅂq,ㄱr,ㄴs,ㅅt,ㅕu,ㅍv,ㅈw,ㅌx,ㅛy,ㅋz'
   vim.opt.foldmethod = 'manual'
+  vim.opt.updatetime = 500
 end
 
 
+
 --------------------------------
---          prequire          --
+--         diagnostics        --
 --------------------------------
-local require = require('prequire').prequire
+do
+  vim.api.nvim_create_autocmd(
+    'CursorHold',
+    {
+      pattern = '*',
+      callback = function()
+        vim.diagnostic.open_float({})
+      end
+    }
+  )
+  vim.diagnostic.config({
+    virtual_text = false,
+    float = {
+      border = 'single',
+      scope = 'cursor',
+      focus = false,
+      wrap = true,
+    }
+  })
+end
+
+--------------------------------
+--           style            --
+--------------------------------
+do
+  -- colorscheme (kanagawa)
+  require('kanagawa').load('dragon')
+  vim.api.nvim_set_hl(0, 'Normal', { bg = 'none', ctermbg = 'none' })
+
+  -- split divider
+  vim.api.nvim_set_hl(0, 'VertSplit', { fg = '#FFFFFF' })
+  vim.api.nvim_set_hl(0, 'StatusLineNC', { fg = '#FFFFFF' })
+end
+
+
+-- --------------------------------
+-- --      nvim-web-devicons     --
+-- --------------------------------
+-- do
+--   vim.api.nvim_set_hl(0, 'DevIconDefault', { fg = devicon.get_default_icon().color });
+--   vim.api.nvim_set_hl(0, 'DevIconZip', { fg = '#F3E5AB' })
+--   require('nvim-web-devicons').setup({
+--     override_by_extension = {
+--       icon = '',
+--       color = 'DevIconZip',
+--       name = 'Zip',
+--     }
+--   })
+-- end
 
 --------------------------------
 --       remember-fold        --
 --------------------------------
-require('remember-fold').setup({
-  ignore_filetypes = { 'oil' },
-})
+do
+  require('remember-fold').setup({
+    enabled = true,
+    ignore_filetypes = { 'oil', 'bookmarks' },
+  })
+end
 
 --------------------------------
 --          terminal          --
 --------------------------------
-require('terminal').setup({
-  open_terminal_h_cmd = 'Hterminal',
-  open_terminal_v_cmd = 'Vterminal',
-  open_terminal_h_keymap = '<C-a>s',
-  open_terminal_v_keymap = '<C-a>v',
-  close_terminal_keymap = '<C-a>x',
-})
+do
+  require('terminal').setup({
+    open_terminal_h_cmd = 'Hterminal',
+    open_terminal_v_cmd = 'Vterminal',
+    open_terminal_h_keymap = '<C-a>s',
+    open_terminal_v_keymap = '<C-a>v',
+    close_terminal_keymap = '<C-a>x',
+  })
+end
 
 --------------------------------
---        plugin-load         --
+---         bookmarks         --
 --------------------------------
-vim.cmd [[packadd packer.nvim]]
-local packer = require('packer')
--- local use_rocks = packer.use_rocks;
-packer.startup(function(use)
-  use({ 'wbthomason/packer.nvim', rocks = { 'penlight' } })
-  use('dense-analysis/ale')
-  use('tpope/vim-endwise')
-  -- use('rcarriga/nvim-notify')
-  use('neovim/nvim-lspconfig')           -- configs for the nvim native LSP client.
-  use('nvim-lua/plenary.nvim')           -- lua util function set like loadash in javascript
-  use('jose-elias-alvarez/null-ls.nvim') -- null language server to provides neovim's language server for extending other language server
-  use('L3MON4D3/LuaSnip');
-  use('saadparwaiz1/cmp_luasnip')
-  use('hrsh7th/nvim-cmp')
-  use('hrsh7th/cmp-nvim-lsp')
-  use('hrsh7th/cmp-nvim-lua')
-  use('hrsh7th/cmp-buffer')
-  use('hrsh7th/cmp-path')
-  use('hrsh7th/cmp-cmdline')
-  use('f3fora/cmp-spell')
-  use('junegunn/fzf.vim')
-  use({
-    'j-hui/fidget.nvim',
-  }) -- ui for LSP server
-  use('nvim-tree/nvim-web-devicons')
-  use('nvim-tree/nvim-tree.lua')
-  use('christoomey/vim-system-copy')
-  use('terrortylor/nvim-comment')
-  use('sonph/onehalf', {
-    rtp = 'vim/'
+do
+  require('bookmarks').setup({
+    bookmarks_file_path = '~/.bookmarks',
+    open_command = 'Bookmarks',
+    edit_command = "BookmarksEdit",
+    keymap_open = 'π',
   })
-  use('windwp/nvim-autopairs')
-  use('luochen1990/rainbow')
-  use('github/copilot.vim')
-  use('folke/todo-comments.nvim')
-  use('Yggdroot/indentLine')
-  use('lewis6991/gitsigns.nvim')
-  -- Themes
-  use('metalelf0/jellybeans-nvim')
-  use('rktjmp/lush.nvim')
-  use('Mofiqul/vscode.nvim')
-  use('folke/tokyonight.nvim')
-  -- use('marko-cerovac/material.nvim')
-  -- use('bluz71/vim-moonfly-colors')
-  -- use('nyoom-engineering/oxocarbon.nvim')
-  -- use('Shatur/neovim-ayu')
-  use('nvim-lualine/lualine.nvim')
-  use({
-    'akinsho/bufferline.nvim',
-    tag = 'v3.*'
+end
+
+--------------------------------
+---         find-file         --
+--------------------------------
+do
+  require('find-file').setup({
+    command = 'FindFile',
+    keymap = '<C-p>',
+    excludes = { 'node_modules', 'dist', 'esm', '.git' }
   })
-  use('hood/popui.nvim')
-  use('tpope/vim-fugitive')
-  use('APZelos/blamer.nvim')
-  use('gpanders/editorconfig.nvim') -- not necessary over neovim 0.9.*, because neovim 0.9 includes builtin editoronfig, current is 0.8.2
-  use('nvim-telescope/telescope.nvim')
-  use({
-    'nvim-telescope/telescope-fzf-native.nvim',
-    run = 'make',
-    requires = { 'nvim-telescope/telescope.nvim' },
-  })
-  use({ 'tzachar/fuzzy.nvim', requires = { 'nvim-telescope/telescope-fzf-native.nvim' } })
-  use({
-    'tzachar/cmp-fuzzy-path',
-    requires = { 'hrsh7th/nvim-cmp', 'tzachar/fuzzy.nvim', 'junegunn/fzf.vim' }
-  })
-  use({
-    'tzachar/cmp-fuzzy-buffer',
-    requires = { 'hrsh7th/nvim-cmp', 'tzachar/fuzzy.nvim' }
-  })
-  use({
-    'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate'
-  })
-  use({
-    'iamcco/markdown-preview.nvim',
-    run = 'cd app && yarn install'
-  })
-  use('MunifTanjim/nui.nvim')
-  use({ "stevearc/oil.nvim" })
-  use({ "karb94/neoscroll.nvim" })
-  use({
-    "m4xshen/hardtime.nvim",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim"
-    },
-    opts = {}
-  })
-  use("easymotion/vim-easymotion")
-  -- use_rocks({ 'rxlua' });
-  -- use_rocks({ 'penlight' });
-end);
+end
+
+
+-- below legacy
 
 require('plugins.plugin-load')
 require('custom.command');
-require('custom.terminal').setup({})
 require('custom.jest-run')
 require('custom.translate-shell')
 require('custom.zshrc').setup({})
