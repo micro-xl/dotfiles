@@ -58,6 +58,8 @@ telescope.setup({
 telescope.load_extension('fzf')
 -- telescope.load_extension('notify')
 
+vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = "none" })
+
 local bufopts = { noremap = true, silent = true }
 vim.keymap.set('n', '<space>p', builtin.commands, bufopts)
 vim.keymap.set('n', '<space>t', builtin.builtin, bufopts)

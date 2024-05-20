@@ -98,6 +98,7 @@ do
       opts = {}
     })
     use("easymotion/vim-easymotion")
+    use("petertriho/nvim-scrollbar")
     -- use('marko-cerovac/material.nvim')
     -- use('bluz71/vim-moonfly-colors')
     -- use('nyoom-engineering/oxocarbon.nvim')
@@ -159,8 +160,6 @@ do
   vim.opt.updatetime = 500
 end
 
-
-
 --------------------------------
 --         diagnostics        --
 --------------------------------
@@ -191,12 +190,63 @@ end
 do
   -- colorscheme (kanagawa)
   require('kanagawa').load('wave') -- wave, dragon, lotus
-  vim.api.nvim_set_hl(0, 'Normal', { bg = 'none', ctermbg = 'none' })
-  vim.api.nvim_set_hl(0, "NonText", { bg = 'none', ctermbg = 'none' })
+  vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
+  vim.api.nvim_set_hl(0, "LineNr", { fg = '#262626', bg = 'none' })
+  vim.api.nvim_set_hl(0, "StatusLine", { bg = '#262626' })
+  vim.api.nvim_set_hl(0, "SignColumn", { bg = "none", fg = 'none' })
+  vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#6e4956", bg = "none" })
+  vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
+  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+  vim.api.nvim_set_hl(0, "GitSignsAdd", { bg = "none", fg = "#5f8559" })
+  vim.api.nvim_set_hl(0, "GitSignsChange", { bg = "none", fg = "#a6a04c" })
+  vim.api.nvim_set_hl(0, "GitSignsDelete", { bg = "none", fg = "#804051" })
+  vim.api.nvim_set_hl(0, "GitSignsStagedAdd", { bg = "none" })
+  vim.api.nvim_set_hl(0, "GitSignsStagedAddLn", { bg = "none" })
+  vim.api.nvim_set_hl(0, "GitSignsStagedAddNr", { bg = "none" })
+  vim.api.nvim_set_hl(0, "GitSignsStagedChange", { bg = "none" })
+  vim.api.nvim_set_hl(0, "GitSignsStagedDelete", { bg = "none" })
+  vim.api.nvim_set_hl(0, "GitSignsStagedChangeLn", { bg = "none" })
+  vim.api.nvim_set_hl(0, "GitSignsStagedChangeNr", { bg = "none" })
+  vim.api.nvim_set_hl(0, "GitSignsStagedDeleteNr", { bg = "none" })
+  vim.api.nvim_set_hl(0, "GitSignsStagedTopdelete", { bg = "none" })
+  vim.api.nvim_set_hl(0, "GitSignsStagedTopdeleteNr", { bg = "none" })
+  vim.api.nvim_set_hl(0, "GitSignsStagedChangedelete", { bg = "none" })
+  vim.api.nvim_set_hl(0, "GitSignsStagedChangedeleteLn", { bg = "none" })
+  vim.api.nvim_set_hl(0, "GitSignsStagedChangedeleteNr", { bg = "none" })
+  vim.api.nvim_set_hl(0, "DiagnosticSignOk", { bg = 'none' })
+  vim.api.nvim_set_hl(0, "DiagnosticSignHint", { bg = 'none' })
+  vim.api.nvim_set_hl(0, "DiagnosticSignWarn", { bg = 'none', fg = '#FFA500' })
+  vim.api.nvim_set_hl(0, "DiagnosticSignError", { bg = 'none' })
+  vim.api.nvim_set_hl(0, "DiagnosticSignInfo", { bg = 'none', fg = '#9fb386' })
+  -- vim.api.nvim_set_hl(0, "LspDiagnosticsDefaultError", { bg = "none" })
+  -- vim.api.nvim_set_hl(0, "LspDiagnosticsDefaultWarning", { bg = "none" })
+  -- vim.api.nvim_set_hl(0, "LspDiagnosticsDefaultInformation", { bg = "none" })
+  -- vim.api.nvim_set_hl(0, "LspDiagnosticsDefaultHint", { bg = "none" })
+end
 
-  -- split divider
-  vim.api.nvim_set_hl(0, 'VertSplit', { fg = '#FFFFFF', ctermfg = 'white' })
-  vim.api.nvim_set_hl(0, 'StatusLineNC', { fg = '#FFFFFF', ctermfg = 'white' })
+
+--------------------------------
+---         gitsigns          --
+--------------------------------
+do
+  require('gitsigns').setup({
+    signs = {
+      add          = { text = '┃' },
+      change       = { text = '┃' },
+      delete       = { text = '_' },
+      topdelete    = { text = '‾' },
+      changedelete = { text = '~' },
+      untracked    = { text = '┆' },
+    },
+  });
+end
+
+--------------------------------
+---        scrollbar          --
+--------------------------------
+do
+  require('scrollbar').setup()
+  require('scrollbar.handlers.gitsigns').setup()
 end
 
 --------------------------------
