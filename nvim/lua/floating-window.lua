@@ -56,8 +56,8 @@ mod.open = function(widthRatio, heightRatio, opts)
   })
 
   if opts.close_on_esc then
-    vim.api.nvim_buf_set_keymap(inner_bufnr, 'n', '<ESC>', ':close ' .. winnr ..'<CR>', { noremap = true })
-    vim.api.nvim_buf_set_keymap(inner_bufnr, 't', '<ESC>', ':close ' .. winnr .. '<CR>', { noremap = true })
+    vim.api.nvim_buf_set_keymap(inner_bufnr, 'n', '<ESC>', ':close ' .. winnr .. '<CR>', { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(inner_bufnr, 't', '<ESC>', ':close ' .. winnr .. '<CR>', { noremap = true, silent = true })
   end
 
   if (opts.filetype ~= nil) then

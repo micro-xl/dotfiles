@@ -52,7 +52,7 @@ mod.setup = function(opts)
 
   vim.keymap.set('n', opts.open_terminal_h_keymap, ':' .. opts.open_terminal_h_cmd .. '<CR>',
     { noremap = true, silent = true })
-  vim.keymap.set('n', opts.open_terminal_v_cmd, ':' .. opts.open_terminal_v_cmd .. '<CR>',
+  vim.keymap.set('n', opts.open_terminal_v_keymap, ':' .. opts.open_terminal_v_cmd .. '<CR>',
     { noremap = true, silent = true })
   vim.keymap.set('n', opts.close_terminal_keymap, function()
     if buf_is_terminal(0) == true then

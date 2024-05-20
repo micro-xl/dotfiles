@@ -1,5 +1,5 @@
 local path_utils = require('utils.path')
-local terminal_utils = require('custom.terminal')
+local terminal_utils = require('terminal')
 local window_utils = require('utils.window')
 local string_utils = require('utils.string')
 local pipe = require('utils.function').pipe
