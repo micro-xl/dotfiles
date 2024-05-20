@@ -190,7 +190,7 @@ end
 --------------------------------
 do
   -- colorscheme (kanagawa)
-  require('kanagawa').load('dragon')
+  require('kanagawa').load('wave') -- wave, dragon, lotus
   vim.api.nvim_set_hl(0, 'Normal', { bg = 'none', ctermbg = 'none' })
   vim.api.nvim_set_hl(0, "NonText", { bg = 'none', ctermbg = 'none' })
 
@@ -251,7 +251,7 @@ end
 do
   require('buffers').setup({
     command = 'Buffers',
-    keymap = '<TAB>'
+    keymap = '<C-b>'
   })
 end
 
