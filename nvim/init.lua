@@ -192,27 +192,12 @@ do
   -- colorscheme (kanagawa)
   require('kanagawa').load('dragon')
   vim.api.nvim_set_hl(0, 'Normal', { bg = 'none', ctermbg = 'none' })
+  vim.api.nvim_set_hl(0, "NonText", { bg = 'none', ctermbg = 'none' })
 
   -- split divider
-  vim.api.nvim_set_hl(0, 'VertSplit', { fg = '#FFFFFF' })
-  vim.api.nvim_set_hl(0, 'StatusLineNC', { fg = '#FFFFFF' })
+  vim.api.nvim_set_hl(0, 'VertSplit', { fg = '#FFFFFF', ctermfg = 'white' })
+  vim.api.nvim_set_hl(0, 'StatusLineNC', { fg = '#FFFFFF', ctermfg = 'white' })
 end
-
-
--- --------------------------------
--- --      nvim-web-devicons     --
--- --------------------------------
--- do
---   vim.api.nvim_set_hl(0, 'DevIconDefault', { fg = devicon.get_default_icon().color });
---   vim.api.nvim_set_hl(0, 'DevIconZip', { fg = '#F3E5AB' })
---   require('nvim-web-devicons').setup({
---     override_by_extension = {
---       icon = '',
---       color = 'DevIconZip',
---       name = 'Zip',
---     }
---   })
--- end
 
 --------------------------------
 --       remember-fold        --
@@ -272,16 +257,15 @@ end
 
 -- below legacy
 
+require('preferences.editor')
+require('preferences.keybindings')
+require('preferences.neovide')
 require('plugins.plugin-load')
 require('custom.command');
 require('custom.jest-run')
 require('custom.translate-shell')
 require('custom.zshrc').setup({})
 require('custom.swapfile').setup({})
-require('preferences.editor')
-require('preferences.keybindings')
-require('preferences.neovide')
-require('plugins.plugin-load')
 
 
 
