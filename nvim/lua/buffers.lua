@@ -32,7 +32,7 @@ mod.fzf_open_buffers = function()
     filetype = 'buffers'
   })
   local sources = get_loaded_buffer()
-  fz.with_fzf(function(fzf)
+  fz.with_fzf_on_cur_win(function(fzf)
     local picked = fzf(sources)
     vim.cmd('e ' .. picked[1])
   end)

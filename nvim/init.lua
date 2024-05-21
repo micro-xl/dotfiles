@@ -1,14 +1,36 @@
+local function stopwatch(msg_maker, power)
+  local timer = 0;
+  return {
+    start = function()
+      if timer == 0 then
+        timer = vim.loop.now()
+      end
+    end,
+    lab = function(arg)
+      if power == false then
+        return;
+      end
+      arg = arg or ''
+      vim.print(msg_maker(arg) .. tostring(vim.loop.now() - timer));
+    end,
+  }
+end
+
+local sw = stopwatch(function(msg) return '🕒 ' .. msg .. 'loading start at ... ' end, false);
+sw.start()
+
 DEBUG = {
   lsp_attached_handler = false,
   formatting = false,
 }
 
-
+sw.lab('prequire')
 --------------------------------
 --          prequire          --
 --------------------------------
 local require = require('prequire').prequire
 
+sw.lab('plugin-load')
 --------------------------------
 --        plugin-load         --
 --------------------------------
@@ -109,6 +131,7 @@ do
   end);
 end
 
+sw.lab('notify')
 --------------------------------
 ---          notify          ---
 --------------------------------
@@ -121,6 +144,7 @@ do
 end
 
 
+sw.lab('vim-options')
 --------------------------------
 --        vim-options         --
 --------------------------------
@@ -161,6 +185,7 @@ do
   vim.opt.updatetime = 500
 end
 
+sw.lab('diagnotics')
 --------------------------------
 --         diagnostics        --
 --------------------------------
@@ -185,6 +210,7 @@ do
   })
 end
 
+sw.lab('style')
 --------------------------------
 --           style            --
 --------------------------------
@@ -192,8 +218,8 @@ do
   -- colorscheme (kanagawa)
   require('kanagawa').load('wave') -- wave, dragon, lotus
   vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
-  vim.api.nvim_set_hl(0, "LineNr", { fg = '#262626', bg = 'none' })
-  vim.api.nvim_set_hl(0, "StatusLine", { bg = '#262626' })
+  vim.api.nvim_set_hl(0, "LineNr", { fg = '#787878', bg = 'none' })
+  vim.api.nvim_set_hl(0, "StatusLine", { bg = '#787878' })
   vim.api.nvim_set_hl(0, "SignColumn", { bg = "none", fg = 'none' })
   vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#ca8498", bg = "none" })
   vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none", fg = "#ca8498" })
@@ -225,6 +251,7 @@ do
   -- vim.api.nvim_set_hl(0, "LspDiagnosticsDefaultHint", { bg = "none" })
 end
 
+sw.lab('colorizer')
 --------------------------------
 ---         colorizer         --
 --------------------------------
@@ -233,6 +260,7 @@ do
 end
 
 
+sw.lab('gitsigns')
 --------------------------------
 ---         gitsigns          --
 --------------------------------
@@ -249,6 +277,7 @@ do
   });
 end
 
+sw.lab('scrollbar')
 --------------------------------
 ---        scrollbar          --
 --------------------------------
@@ -257,6 +286,7 @@ do
   require('scrollbar.handlers.gitsigns').setup()
 end
 
+sw.lab('remember-fold')
 --------------------------------
 --       remember-fold        --
 --------------------------------
@@ -267,6 +297,7 @@ do
   })
 end
 
+sw.lab('terminal')
 --------------------------------
 --          terminal          --
 --------------------------------
@@ -280,6 +311,7 @@ do
   })
 end
 
+sw.lab('bookmarks')
 --------------------------------
 ---         bookmarks         --
 --------------------------------
@@ -292,6 +324,7 @@ do
   })
 end
 
+sw.lab('find-file')
 --------------------------------
 ---         find-file         --
 --------------------------------
@@ -303,6 +336,7 @@ do
   })
 end
 
+sw.lab('buffers')
 --------------------------------
 ---          buffers          --
 --------------------------------
@@ -313,6 +347,7 @@ do
   })
 end
 
+sw.lab('load legacy')
 -- below legacy
 
 require('preferences.editor')

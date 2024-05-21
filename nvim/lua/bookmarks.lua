@@ -10,7 +10,7 @@ local function cd_to_bookmark(file_path)
   asserter.non_empty_string(file_path, 'file_path')
   local sources = h_string.split(h_string.trim(exec('cat ' .. file_path)), '\n')
   floating.open(0.9, 0.8, { filetype = 'bookmarks' });
-  fz.with_fzf(function(fzf)
+  fz.with_fzf_on_cur_win(function(fzf)
     local picked = fzf(sources)
     vim.notify('[CWD] ' .. picked[1])
     vim.cmd('cd ' .. picked[1])

@@ -6,6 +6,8 @@ local fz = require('fzf-wrapper');
 local exec = require('h-shell').exec
 local get_icon = require('nvim-web-devicons').get_icon
 
+-- TODO: 최초파일 리스트 캐시 확보 비동기로 변경
+
 local mod = {}
 
 local function icon_of_filename(filename)
@@ -36,21 +38,34 @@ mod.fzf_find_file = function(opts)
   floating.open(0.9, 0.8, {
     filetype = 'find-file'
   })
-  local pwd_stdout = h_string.trim(exec('pwd'))
-  local pwd_size_stdout = h_string.trim(exec('stat -f "%z" .'))
-  local sources = nil
 
-  if last_key == make_key(pwd_stdout, pwd_size_stdout) then
-    sources = last_sources
-  else
-    local fd_stdout = h_string.trim(exec('fd --type f --hidden --no-ignore ' .. excludes .. ' .'))
-    sources = h_list.map(h_string.split(fd_stdout, '\n'), function(item)
-      return icon_of_filename(item) .. ' ' .. item
-    end)
-    last_key = make_key(pwd_stdout, pwd_size_stdout)
-    last_sources = sources
-  end
-  fz.with_fzf(function(fzf)
+  fz.with_fzf_on_cur_win(function(fzf)
+    local pwd_stdout = h_string.trim(exec('pwd'))
+    local pwd_size_stdout = h_string.trim(exec('stat -f "%z" .'))
+    local sources = nil
+
+    -- TODO 스트림 처리로 변경
+    local ignore_error = function(err)
+      if err then
+        return;
+      end
+    end
+
+    -- fzf(function(emit)
+    --   emit('1', ignore_error)
+    --   emit('2', ignore_error)
+    -- end)
+
+    if last_key == make_key(pwd_stdout, pwd_size_stdout) then
+      sources = last_sources
+    else
+      local fd_stdout = h_string.trim(exec('fd --type f --hidden --no-ignore ' .. excludes .. ' .'))
+      sources = h_list.map(h_string.split(fd_stdout, '\n'), function(item)
+        return icon_of_filename(item) .. ' ' .. item
+      end)
+      last_key = make_key(pwd_stdout, pwd_size_stdout)
+      last_sources = sources
+    end
     local picked = fzf(sources)
 
     local extract_path = function(item)
