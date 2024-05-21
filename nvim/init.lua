@@ -99,6 +99,7 @@ do
     })
     use("easymotion/vim-easymotion")
     use("petertriho/nvim-scrollbar")
+    use("norcalli/nvim-colorizer.lua")
     -- use('marko-cerovac/material.nvim')
     -- use('bluz71/vim-moonfly-colors')
     -- use('nyoom-engineering/oxocarbon.nvim')
@@ -194,12 +195,12 @@ do
   vim.api.nvim_set_hl(0, "LineNr", { fg = '#262626', bg = 'none' })
   vim.api.nvim_set_hl(0, "StatusLine", { bg = '#262626' })
   vim.api.nvim_set_hl(0, "SignColumn", { bg = "none", fg = 'none' })
-  vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#6e4956", bg = "none" })
-  vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
+  vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#ca8498", bg = "none" })
+  vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none", fg = "#ca8498" })
   vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
   vim.api.nvim_set_hl(0, "GitSignsAdd", { bg = "none", fg = "#5f8559" })
   vim.api.nvim_set_hl(0, "GitSignsChange", { bg = "none", fg = "#a6a04c" })
-  vim.api.nvim_set_hl(0, "GitSignsDelete", { bg = "none", fg = "#804051" })
+  vim.api.nvim_set_hl(0, "GitSignsDelete", { bg = "none", fg = "#944051" })
   vim.api.nvim_set_hl(0, "GitSignsStagedAdd", { bg = "none" })
   vim.api.nvim_set_hl(0, "GitSignsStagedAddLn", { bg = "none" })
   vim.api.nvim_set_hl(0, "GitSignsStagedAddNr", { bg = "none" })
@@ -222,6 +223,13 @@ do
   -- vim.api.nvim_set_hl(0, "LspDiagnosticsDefaultWarning", { bg = "none" })
   -- vim.api.nvim_set_hl(0, "LspDiagnosticsDefaultInformation", { bg = "none" })
   -- vim.api.nvim_set_hl(0, "LspDiagnosticsDefaultHint", { bg = "none" })
+end
+
+--------------------------------
+---         colorizer         --
+--------------------------------
+do
+  require('colorizer').setup()
 end
 
 

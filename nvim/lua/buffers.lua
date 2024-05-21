@@ -27,8 +27,8 @@ local get_loaded_buffer = pipe(
   end
 )
 
-mod.buffers = function()
-  local opened = floating.open(0.8, 0.8, {
+mod.fzf_open_buffers = function()
+  floating.open(0.9, 0.8, {
     filetype = 'buffers'
   })
   local sources = get_loaded_buffer()
@@ -47,7 +47,7 @@ mod.setup = function(opts)
   asserter.non_empty_string(opts.keymap, 'opts.keymap')
 
   vim.api.nvim_create_user_command(opts.command, function()
-    mod.buffers()
+    mod.fzf_open_buffers()
   end, {})
 
   vim.api.nvim_set_keymap('n', opts.keymap, ':' .. opts.command .. '<CR>', { noremap = true, silent = true })

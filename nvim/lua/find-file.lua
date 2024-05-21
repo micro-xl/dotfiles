@@ -26,14 +26,14 @@ end
 
 -- @params {table} opts
 -- @params {string} opts.excludes
-mod.find_file = function(opts)
+mod.fzf_find_file = function(opts)
   asserter.not_nil(opts, 'opts');
   asserter.table(opts, 'opts');
 
   local excludes = opts.excludes ~= nil and h_list.join(h_list.map(opts.excludes, function(exclude_item)
         return '--exclude ' .. exclude_item
       end), ' ') or '';
-  floating.open(0.8, 0.8, {
+  floating.open(0.9, 0.8, {
     filetype = 'find-file'
   })
   local pwd_stdout = h_string.trim(exec('pwd'))
@@ -71,7 +71,7 @@ mod.setup = function(opts)
   asserter.non_empty_string(opts.keymap, 'opts.keymap')
 
   vim.api.nvim_create_user_command(opts.command, function()
-    mod.find_file({
+    mod.fzf_find_file({
       excludes = opts.excludes
     })
   end, {})

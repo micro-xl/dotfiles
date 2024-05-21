@@ -1,6 +1,6 @@
 local mod = {}
 
-mod.Log = function(something)
+mod.log = function(something)
   vim.cmd('echo ' .. vim.inspect(something))
 end
 
