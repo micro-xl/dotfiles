@@ -1,7 +1,7 @@
 local mod = {}
 
-mod.log = function(something)
-  vim.cmd('echo ' .. vim.inspect(something))
+mod.LOG = function(something)
+  vim.notify('LOG :' .. vim.inspect(something))
 end
 
 return mod
