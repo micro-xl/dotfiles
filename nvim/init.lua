@@ -1,137 +1,110 @@
-local function stopwatch(msg_maker, power)
-  local timer = 0;
-  return {
-    start = function()
-      if timer == 0 then
-        timer = vim.loop.now()
-      end
-    end,
-    lab = function(arg)
-      if power == false then
-        return;
-      end
-      arg = arg or ''
-      vim.print(msg_maker(arg) .. tostring(vim.loop.now() - timer));
-    end,
-  }
-end
-
-local sw = stopwatch(function(msg) return '🕒 ' .. msg .. 'loading start at ... ' end, false);
-sw.start()
-
 DEBUG = {
   lsp_attached_handler = false,
   formatting = false,
 }
 
-sw.lab('prequire')
 --------------------------------
 --          prequire          --
 --------------------------------
 local require = require('prequire').prequire
 
-sw.lab('plugin-load')
 --------------------------------
 --        plugin-load         --
 --------------------------------
 do
-  vim.cmd [[packadd packer.nvim]]
-  local packer = require('packer')
-  -- local use_rocks = packer.use_rocks;
-  packer.startup(function(use)
-    use('wbthomason/packer.nvim')
-    use('dense-analysis/ale')
-    use('tpope/vim-endwise')
-    use('rebelot/kanagawa.nvim')
-    use('rcarriga/nvim-notify')
-    use('neovim/nvim-lspconfig')           -- configs for the nvim native LSP client.
-    use('nvim-lua/plenary.nvim')           -- lua util function set like loadash in javascript
-    use('jose-elias-alvarez/null-ls.nvim') -- null language server to provides neovim's language server for extending other language server
-    use('L3MON4D3/LuaSnip');
-    use('saadparwaiz1/cmp_luasnip')
-    use('hrsh7th/nvim-cmp')
-    use('hrsh7th/cmp-nvim-lsp')
-    use('hrsh7th/cmp-nvim-lua')
-    use('hrsh7th/cmp-buffer')
-    use('hrsh7th/cmp-path')
-    use('hrsh7th/cmp-cmdline')
-    use('f3fora/cmp-spell')
-    use('vijaymarupudi/nvim-fzf')
-    use('junegunn/fzf')
-    use('junegunn/fzf.vim')
-    use({
-      'j-hui/fidget.nvim',
-    }) -- ui for LSP server
-    use('nvim-tree/nvim-web-devicons')
-    use('nvim-tree/nvim-tree.lua')
-    use('christoomey/vim-system-copy')
-    use('terrortylor/nvim-comment')
-    use({
-      'sonph/onehalf',
-      rtp = 'vim/'
+  local lazypath = vim.fn.stdpath("data") .. "lua/lazy.nvim"
+  if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    vim.fn.system({
+      "git",
+      "clone",
+      "--filter=blob:none",
+      "https://github.com/folke/lazy.nvim.git",
+      "--branch=stable", -- latest stable release
+      lazypath,
     })
-    use('windwp/nvim-autopairs')
-    use('luochen1990/rainbow')
-    use('github/copilot.vim')
-    use('folke/todo-comments.nvim')
-    use('Yggdroot/indentLine')
-    use('lewis6991/gitsigns.nvim')
-    use('nvim-lualine/lualine.nvim')
-    use({
-      'Theyashsawarkar/bufferline.nvim',
-      tag = '*',
-      require = 'nvim-tree/nvim-web-devicons'
-    })
-    use('hood/popui.nvim')
-    use('tpope/vim-fugitive')
-    use('APZelos/blamer.nvim')
-    use('nvim-telescope/telescope.nvim')
-    use({
+  end
+  vim.opt.rtp:prepend(lazypath)
+
+  require('lazy').setup({
+    'dense-analysis/ale',
+    'tpope/vim-endwise',
+    'rebelot/kanagawa.nvim',
+    'rcarriga/nvim-notify',
+    'neovim/nvim-lspconfig',           -- configs for the nvim native LSP client
+    'nvim-lua/plenary.nvim',           -- lua util function set like loadash in javascript
+    'jose-elias-alvarez/null-ls.nvim', -- null language server to provides neovim's language server for extending other language server
+    'L3MON4D3/LuaSnip',
+    'saadparwaiz1/cmp_luasnip',
+    'hrsh7th/nvim-cmp',
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-nvim-lua',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
+    'hrsh7th/cmp-cmdline',
+    'f3fora/cmp-spell',
+    'vijaymarupudi/nvim-fzf',
+    'junegunn/fzf',
+    'junegunn/fzf.vim',
+    'j-hui/fidget.nvim',
+    'nvim-tree/nvim-web-devicons',
+    'nvim-tree/nvim-tree.lua',
+    'christoomey/vim-system-copy',
+    'terrortylor/nvim-comment',
+    'windwp/nvim-autopairs',
+    'luochen1990/rainbow',
+    'github/copilot.vim',
+    'folke/todo-comments.nvim',
+    'Yggdroot/indentLine',
+    'lewis6991/gitsigns.nvim',
+    'nvim-lualine/lualine.nvim',
+    {
+      'akinsho/bufferline.nvim',
+      dependencies = { 'nvim-tree/nvim-web-devicons' }
+    },
+    'hood/popui.nvim',
+    'tpope/vim-fugitive',
+    'APZelos/blamer.nvim',
+    'nvim-telescope/telescope.nvim',
+    {
       'nvim-telescope/telescope-fzf-native.nvim',
-      run = 'make',
-      requires = { 'nvim-telescope/telescope.nvim' },
-    })
-    use({ 'tzachar/fuzzy.nvim', requires = { 'nvim-telescope/telescope-fzf-native.nvim' } })
-    use({
+      dependencies = { 'nvim-telescope/telescope.nvim' },
+      build = 'make'
+    },
+    {
+      'tzachar/fuzzy.nvim',
+      dependencies = { 'nvim-telescope/telescope-fzf-native.nvim' }
+    },
+    {
       'tzachar/cmp-fuzzy-path',
-      requires = { 'hrsh7th/nvim-cmp', 'tzachar/fuzzy.nvim', 'junegunn/fzf.vim' }
-    })
-    use({
+      dependencies = { 'hrsh7th/nvim-cmp', 'tzachar/fuzzy.nvim', 'junegunn/fzf.vim' }
+    },
+    {
       'tzachar/cmp-fuzzy-buffer',
       requires = { 'hrsh7th/nvim-cmp', 'tzachar/fuzzy.nvim' }
-    })
-    use({
+    },
+    {
       'nvim-treesitter/nvim-treesitter',
-      run = ':tsupdate'
-    })
-    use({
+      cmd = 'Tsupdate'
+    },
+    {
       'iamcco/markdown-preview.nvim',
-      run = 'cd app && yarn install'
-    })
-    use('MunifTanjim/nui.nvim')
-    use({ "stevearc/oil.nvim" })
-    use({ "karb94/neoscroll.nvim" })
-    use({
+      build = 'cd app && yarn install'
+    },
+    'MunifTanjim/nui.nvim',
+    'stevearc/oil.nvim',
+    'karb94/neoscroll.nvim',
+    {
       "m4xshen/hardtime.nvim",
-      dependencies = {
-        "MunifTanjim/nui.nvim",
-        "nvim-lua/plenary.nvim"
-      },
-      opts = {}
-    })
-    use("easymotion/vim-easymotion")
-    use("petertriho/nvim-scrollbar")
-    use("norcalli/nvim-colorizer.lua")
-    -- use('marko-cerovac/material.nvim')
-    -- use('bluz71/vim-moonfly-colors')
-    -- use('nyoom-engineering/oxocarbon.nvim')
-    -- use('Shatur/neovim-ayu')
-    -- use_rocks({ 'rxlua' });
-    -- use_rocks({ 'penlight' });
-  end);
+      dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+    },
+    "easymotion/vim-easymotion",
+    "petertriho/nvim-scrollbar",
+    "norcalli/nvim-colorizer.lua",
+  })
+  vim.loader.enable()
 end
 
-sw.lab('notify')
+
 --------------------------------
 ---          notify          ---
 --------------------------------
@@ -144,7 +117,6 @@ do
 end
 
 
-sw.lab('vim-options')
 --------------------------------
 --        vim-options         --
 --------------------------------
@@ -185,7 +157,6 @@ do
   vim.opt.updatetime = 500
 end
 
-sw.lab('diagnotics')
 --------------------------------
 --         diagnostics        --
 --------------------------------
@@ -210,7 +181,6 @@ do
   })
 end
 
-sw.lab('style')
 --------------------------------
 --           style            --
 --------------------------------
@@ -241,17 +211,16 @@ do
   vim.api.nvim_set_hl(0, "GitSignsStagedChangedeleteLn", { bg = "none" })
   vim.api.nvim_set_hl(0, "GitSignsStagedChangedeleteNr", { bg = "none" })
   vim.api.nvim_set_hl(0, "DiagnosticSignOk", { bg = 'none' })
-  vim.api.nvim_set_hl(0, "DiagnosticSignHint", { bg = 'none' })
-  vim.api.nvim_set_hl(0, "DiagnosticSignWarn", { bg = 'none', fg = '#FFA500' })
-  vim.api.nvim_set_hl(0, "DiagnosticSignError", { bg = 'none' })
+  vim.api.nvim_set_hl(0, "DiagnosticSignHint", { bg = 'none', fg = '#9fb386' })
+  vim.api.nvim_set_hl(0, "DiagnosticSignWarn", { bg = 'none', fg = '#c29d19' })
+  vim.api.nvim_set_hl(0, "DiagnosticSignError", { bg = 'none', fg = '#963838' })
   vim.api.nvim_set_hl(0, "DiagnosticSignInfo", { bg = 'none', fg = '#9fb386' })
-  -- vim.api.nvim_set_hl(0, "LspDiagnosticsDefaultError", { bg = "none" })
-  -- vim.api.nvim_set_hl(0, "LspDiagnosticsDefaultWarning", { bg = "none" })
-  -- vim.api.nvim_set_hl(0, "LspDiagnosticsDefaultInformation", { bg = "none" })
-  -- vim.api.nvim_set_hl(0, "LspDiagnosticsDefaultHint", { bg = "none" })
+  vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { bg = '#963838' })
+  vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { bg = '#c29d19' })
+  -- vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { bg = 'none'l})
+  -- vim.api.nvim_set_hl(0, "DiagnositcError", { bg = "none", fg = '#FF4051' })
 end
 
-sw.lab('colorizer')
 --------------------------------
 ---         colorizer         --
 --------------------------------
@@ -260,7 +229,6 @@ do
 end
 
 
-sw.lab('gitsigns')
 --------------------------------
 ---         gitsigns          --
 --------------------------------
@@ -277,7 +245,6 @@ do
   });
 end
 
-sw.lab('scrollbar')
 --------------------------------
 ---        scrollbar          --
 --------------------------------
@@ -286,7 +253,6 @@ do
   require('scrollbar.handlers.gitsigns').setup()
 end
 
-sw.lab('remember-fold')
 --------------------------------
 --       remember-fold        --
 --------------------------------
@@ -297,7 +263,6 @@ do
   })
 end
 
-sw.lab('terminal')
 --------------------------------
 --          terminal          --
 --------------------------------
@@ -311,7 +276,6 @@ do
   })
 end
 
-sw.lab('bookmarks')
 --------------------------------
 ---         bookmarks         --
 --------------------------------
@@ -324,7 +288,6 @@ do
   })
 end
 
-sw.lab('find-file')
 --------------------------------
 ---         find-file         --
 --------------------------------
@@ -336,7 +299,6 @@ do
   })
 end
 
-sw.lab('buffers')
 --------------------------------
 ---          buffers          --
 --------------------------------
@@ -347,7 +309,6 @@ do
   })
 end
 
-sw.lab('load legacy')
 -- below legacy
 
 require('preferences.editor')

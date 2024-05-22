@@ -7,15 +7,15 @@ require('lualine').setup({
     -- theme = 'moonfly',
     -- theme = 'oxocarbon',
     -- theme = 'ayu',
-    component_separators = { left = '', right = '' },
-    section_separators = { left = '', right = '' },
+    component_separators = { left = '>', right = '<' },
+    section_separators = { left = '', right = '' },
     disabled_filetypes = {
       statusline = {},
       winbar = {},
     },
     ignore_focus = {},
     always_divide_middle = true,
-    globalstatus = true,
+    globalstatus = false,
     refresh = {
       statusline = 1000,
       tabline = 1000,
