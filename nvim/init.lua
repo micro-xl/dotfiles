@@ -153,7 +153,7 @@ do
   vim.opt.pumheight = 10
   vim.opt.showcmd = true
   vim.opt.langmap = 'ㅁa,ㅠb,ㅊc,ㅇd,ㄷe,ㄹf,ㅎg,ㅗh,ㅑi,ㅓj,ㅏk,ㅣl,ㅡm,ㅜn,ㅐo,ㅔp,ㅂq,ㄱr,ㄴs,ㅅt,ㅕu,ㅍv,ㅈw,ㅌx,ㅛy,ㅋz'
-  vim.opt.foldmethod = 'manual'
+  vim.opt.foldmethod = 'syntax'
   vim.opt.updatetime = 500
 end
 

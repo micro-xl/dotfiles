@@ -48,7 +48,7 @@ mod.fzf_find_file = function(opts)
     local sources = h_list.map(h_string.split(fd_stdout, '\n'), function(item)
       return icon_of_filename(item) .. ' ' .. item
     end)
-    local picked = fzf(sources)
+    local picked = fzf(sources, '--color=gutter:-1')
     asserter.assert(#picked == 1, 'length of picked should be 1')
 
     local start_idx, end_idx = string.find(picked[1], ' ');
