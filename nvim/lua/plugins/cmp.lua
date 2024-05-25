@@ -7,6 +7,7 @@ return {
     dependencies = {
       { -- Snippet Engine & its associated nvim-cmp source
         'L3MON4D3/LuaSnip',
+        ft = { 'lua', 'typescript', 'javascript' },
         build = (function()
           if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
             return

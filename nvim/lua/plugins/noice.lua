@@ -3,7 +3,6 @@ return {
     'folke/noice.nvim',
     event = 'VeryLazy',
     dependencies = {
-      { 'rebelot/kanagawa.nvim' },
       { 'MunifTanjim/nui.nvim' },
       'rcarriga/nvim-notify',
     },
@@ -11,6 +10,10 @@ return {
       require('noice').setup {
         popupmenu = {
           backend = 'cmp', -- nui or cmp
+          opts = {
+            winblend = 0,
+            border = 'rounded',
+          },
         },
         lsp = {
           progress = {

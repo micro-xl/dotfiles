@@ -4,7 +4,6 @@ return {
   {
     'rebelot/kanagawa.nvim',
     event = 'VimEnter',
-    dependencies = { 'nvim-telescope/telescope.nvim' },
     config = function()
       require('kanagawa').load 'wave'
       vim.api.nvim_set_hl(0, 'Normal', { bg = 'none', fg = '#787878' })

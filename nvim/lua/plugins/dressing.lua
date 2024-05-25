@@ -8,6 +8,9 @@ return {
       input = {
         border = 'rounded',
       },
+      select = {
+        border = 'rounded',
+      },
     }
   end,
 }

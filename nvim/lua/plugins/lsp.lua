@@ -3,37 +3,22 @@
 return {
   { -- Collections of Configuration for LSP
     'neovim/nvim-lspconfig',
+    ft = { 'lua', 'javascript', 'typesciprt' },
     dependencies = {
       { -- Manageing the external tools (LSP, DAP, Linter & Foramtter) for Cross-Flatform
         'williamboman/mason.nvim',
         config = true,
       },
       {
-        'nvim-telescope/telescope.nvim',
-      },
-      {
         'williamboman/mason-lspconfig.nvim',
       },
       'WhoIsSethDaniel/mason-tool-installer.nvim',
-      -- { -- Useful status updates for LSP.
-      --   'j-hui/fidget.nvim',
-      --   config = function()
-      --     -- require('fidget').setup {
-      --     --   notification = {
-      --     --     window = {
-      --     --       normal_hl = 'NormalFloat',
-      --     --       winblend = 0,
-      --     --       border = 'rounded',
-      --     --       x_padding = 1,
-      --     --       relative = 'editor',
-      --     --     },
-      --     --   },
-      --     -- }
-      --   end,
-      --   dependencies = { 'rebelot/kanagawa.nvim' },
-      -- },
       { -- Configures Lua Lsp for Neovim config, including lua-language-server (completion, annotations and signature of Neovim api)
         'folke/neodev.nvim',
+        cond = function()
+          local cwd = require('lib.h-path').get_current_dir_path()
+          return require('lib.h-string').includes(cwd, 'dotfiles')
+        end,
         opts = {},
       },
     },
