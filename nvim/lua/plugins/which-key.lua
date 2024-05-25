@@ -4,7 +4,7 @@ return {
   {
     'folke/which-key.nvim',
     event = 'VimEnter',
-    enable = false,
+    enabled = false,
     config = function()
       require('which-key').setup()
       require('which-key').register {

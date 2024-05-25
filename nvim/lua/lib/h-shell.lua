@@ -1,5 +1,4 @@
-local h_string = require('h-string')
-local asserter = require('asserter');
+local asserter = require 'lib.asserter'
 
 local mod = {}
 
@@ -20,8 +19,8 @@ mod.pexec = function(cmd_str)
   local stdout_file = io.open(tmp_stdout, 'r')
   local stderr_file = io.open(tmp_stderr, 'r')
 
-  local stdout = stdout_file:read('*a')
-  local stderr = stderr_file:read('*a')
+  local stdout = stdout_file:read '*a'
+  local stderr = stderr_file:read '*a'
 
   stdout_file:close()
   stderr_file:close()
@@ -46,4 +45,4 @@ mod.exec = function(cmd_str)
   return stdout
 end
 
-return mod;
+return mod

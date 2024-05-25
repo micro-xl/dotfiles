@@ -53,3 +53,11 @@ return {
     end,
   },
 }
+
+-- dressing
+-- nvim-notify
+-- indent-blankline
+-- noice
+-- dashboard-nvim
+-- nvim-treesitte-context
+-- nvim-treesitte-textobjects

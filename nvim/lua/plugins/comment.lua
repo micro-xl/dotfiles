@@ -3,7 +3,16 @@
 return {
   { -- "gc" to comment visual regions/lines
     'numToStr/Comment.nvim',
-    keys = { '<C-/>', '<C-?>' },
+    keys = {
+      {
+        '<C-/>',
+        mode = { 'n', 'v' },
+      },
+      {
+        '<C-?>',
+        mode = { 'n', 'v' },
+      },
+    },
     opts = {
       toggler = {
         line = '<C-/>',

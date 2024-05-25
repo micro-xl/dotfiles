@@ -5,13 +5,9 @@ return {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     dependencies = {
-      -- Snippet Engine & its associated nvim-cmp source
-      {
+      { -- Snippet Engine & its associated nvim-cmp source
         'L3MON4D3/LuaSnip',
         build = (function()
-          -- Build Step is needed for regex support in snippets.
-          -- This step is not supported in many windows environments.
-          -- Remove the below condition to re-enable on windows.
           if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
             return
           end
@@ -42,8 +38,59 @@ return {
         end
       end
       local cmp = require 'cmp'
+
       local luasnip = require 'luasnip'
-      luasnip.config.setup {}
+      do
+        local snp = luasnip.snippet
+        local ins = luasnip.insert_node
+        local fmt = require('luasnip.extras.fmt').fmt
+        luasnip.config.setup {}
+        luasnip.add_snippets('typescript', {
+          snp(
+            'desc',
+            fmt(
+              [[
+      describe('{1}', () => {{
+        it('{2}', () => {{
+          {3}
+        }})
+      }})
+]],
+              {
+                ins(1, '/* test name */'),
+                ins(2, '/* specification */'),
+                ins(3, '// test code'),
+              }
+            )
+          ),
+          snp(
+            'pbcopy',
+            fmt(
+              [[
+      function pbcopy(data: {1}) {{
+        const proc = require('child_process').spawn('pbcopy');
+        proc.stdin.write(data);
+        proc.stdin.end();
+      }}
+    ]],
+              {
+                ins(1, 'any'),
+              }
+            )
+          ),
+        })
+
+        vim.cmd "imap <silent><expr> <Tab> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>'"
+        vim.keymap.set('i', '<S-Tab>', function()
+          luasnip.jump(-1)
+        end, { silent = true })
+        vim.keymap.set('s', '<Tab>', function()
+          luasnip.jump(1)
+        end, { silent = true })
+        vim.keymap.set('s', '<S-Tab>', function()
+          luasnip.jump(-1)
+        end, { silent = true })
+      end
 
       cmp.setup {
         snippet = {
