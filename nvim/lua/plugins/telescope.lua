@@ -45,13 +45,10 @@ return {
       vim.keymap.set('n', 'gd', builtin.lsp_definitions, {})
       vim.keymap.set('n', 'gi', builtin.lsp_implementations, {})
       vim.keymap.set('n', '<C-b>', builtin.buffers, {})
-      vim.keymap.set('n', '<C-f>', function()
-        builtin.current_buffer_fuzzy_find()
-      end, { desc = 'Find in the current buffer' })
       -- Find files
       vim.keymap.set('n', '<C-p>', function()
         builtin.find_files {
-          cwd = vim.fn.getcwd(),
+          cwd = vim.loop.cwd(),
           no_ignore = false,
           no_ignore_parent = false,
           hidden = false,

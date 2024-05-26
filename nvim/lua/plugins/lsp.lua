@@ -3,7 +3,7 @@
 return {
   { -- Collections of Configuration for LSP
     'neovim/nvim-lspconfig',
-    ft = { 'lua', 'javascript', 'typesciprt' },
+    event = { 'VimEnter' }, -- TODO: filetype으로 lazy loading 하려고 해도 config가 자꾸 안되는 이슈가있다
     dependencies = {
       { -- Manageing the external tools (LSP, DAP, Linter & Foramtter) for Cross-Flatform
         'williamboman/mason.nvim',
@@ -15,11 +15,7 @@ return {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       { -- Configures Lua Lsp for Neovim config, including lua-language-server (completion, annotations and signature of Neovim api)
         'folke/neodev.nvim',
-        cond = function()
-          local cwd = require('lib.h-path').get_current_dir_path()
-          return require('lib.h-string').includes(cwd, 'dotfiles')
-        end,
-        opts = {},
+        config = true,
       },
     },
     config = function()
@@ -93,6 +89,9 @@ return {
           -- capabilities = {},
           settings = {
             Lua = {
+              diagnostics = {
+                globals = { 'LOG' },
+              },
               completion = {
                 callSnippet = 'Replace',
               },
@@ -155,6 +154,7 @@ return {
           end,
         },
       }
+      LOG '[LOADED] lsp'
     end,
   },
 }

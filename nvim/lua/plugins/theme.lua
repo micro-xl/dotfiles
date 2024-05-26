@@ -10,7 +10,7 @@ return {
       vim.api.nvim_set_hl(0, 'LineNr', { fg = '#787878', bg = 'none' })
       vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#787878' })
       vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'none', fg = 'none' })
-      vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#ca8498', bg = 'none' })
+      vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'none', fg = '#ca8498' })
       vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none', fg = '#ca8498' })
       vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
       vim.api.nvim_set_hl(0, 'FloatTitle', { bg = 'none', fg = '#FFFFFF' })
@@ -40,6 +40,7 @@ return {
       vim.api.nvim_set_hl(0, 'TelescopeBorder', { bg = 'none', fg = '#ca8498' })
       -- vim.api.nvim_set_hl(0, 'TelescopeNormal', { bg = 'none' })
       vim.api.nvim_set_hl(0, 'LspInfoBorder', { bg = 'none', fg = '#ca8498' })
+      vim.api.nvim_set_hl(0, 'MsgArea', { bg = 'none', fg = '#ca8498' })
       -- vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { bg = 'none'l})
       -- vim.api.nvim_set_hl(0, "DiagnositcError", { bg = "none", fg = '#FF4051' })
     end,

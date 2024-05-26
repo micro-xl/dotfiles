@@ -1,7 +1,11 @@
 return {
   {
     'nvim-lualine/lualine.nvim',
-    event = { 'BufReadPost', 'BufNewFile' },
+    event = { 'VeryLazy' },
+    dependencies = {
+      { 'nvim-tree/nvim-web-devicons' },
+      { 'folke/noice.nvim' },
+    },
     config = function()
       require('lualine').setup {
         options = {
@@ -10,7 +14,7 @@ return {
           component_separators = { left = '>', right = '<' },
           section_separators = { left = '', right = '' },
           disabled_filetypes = {
-            statusline = {},
+            statusline = { 'dashboard', 'oil', 'neo-tree', 'TelescopePrompt' },
             winbar = {},
           },
           ignore_focus = {},
@@ -23,7 +27,15 @@ return {
           },
         },
         sections = {
-          lualine_a = { 'mode' },
+          lualine_a = {
+            'mode',
+            {
+              require('noice').api.status.mode.get,
+              cond = require('noice').api.status.mode.has,
+
+              -- color = { fg = '#ff9e64' },
+            },
+          },
           lualine_b = { 'branch', 'diff', 'diagnostics' },
           lualine_c = { 'filename' },
           lualine_x = { 'encoding', 'fileformat', 'filetype' },
@@ -43,6 +55,7 @@ return {
         inactive_winbar = {},
         extensions = {},
       }
+      LOG '[LOADED] lualine'
     end,
   },
 }
