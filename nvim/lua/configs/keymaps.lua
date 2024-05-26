@@ -50,6 +50,7 @@ vim.keymap.set('n', '{', ':bp<CR>', { silent = true })
 vim.keymap.set('n', '}', ':bn<CR>', { silent = true })
 vim.keymap.set('t', '{', ':bp<CR>', { silent = true })
 vim.keymap.set('t', '}', ':bn<CR>', { silent = true })
+
 -- Close all buffer but current one
 vim.keymap.set('n', '<C-w>C', ':%bd|e#|bd#<CR>', { silent = true })
 -- Paste without yanking in visual mode
@@ -61,6 +62,11 @@ vim.keymap.set('n', '©', require('lib.h-path').change_cwd_to_root_dir_of_cur_fi
 -- Diagnostics
 vim.keymap.set('n', 'g]', vim.diagnostic.goto_next, {})
 vim.keymap.set('n', 'g[', vim.diagnostic.goto_prev, {})
+
+-- <C-f> for find
+vim.keymap.set('n', '<C-f>', function()
+  vim.api.nvim_feedkeys('/', 'n', false)
+end, { silent = true })
 
 -- Terminal
 do
