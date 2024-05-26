@@ -2,7 +2,7 @@
 
 return {
   'stevearc/dressing.nvim',
-  event = 'VimEnter',
+  event = 'VeryLazy',
   config = function()
     require('dressing').setup {
       input = {
@@ -12,5 +12,6 @@ return {
         border = 'rounded',
       },
     }
+    LOG '[LOADED] dressing'
   end,
 }
