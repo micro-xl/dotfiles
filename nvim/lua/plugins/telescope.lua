@@ -23,15 +23,15 @@ return {
     },
     config = function()
       require('telescope').setup {
-        extensions = {
-          ['ui-select'] = {
-            require('telescope.themes').get_dropdown(),
-          },
-        },
+        -- extensions = {
+        --   ['ui-select'] = {
+        --     require('telescope.themes').get_dropdown(),
+        --   },
+        -- },
       }
 
       pcall(require('telescope').load_extension, 'fzf')
-      pcall(require('telescope').load_extension, 'ui-select')
+      -- pcall(require('telescope').load_extension, 'ui-select')
 
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<space>p', builtin.commands, {})
@@ -40,18 +40,34 @@ return {
       vim.keymap.set('n', '<space>f', builtin.live_grep, {})
       vim.keymap.set('v', '<space>f', builtin.grep_string, {})
       vim.keymap.set('n', 'giw', builtin.grep_string, {})
-      vim.keymap.set('n', 'gr', builtin.lsp_references, {})
-      vim.keymap.set('n', 'gt', builtin.lsp_type_definitions, {})
-      vim.keymap.set('n', 'gd', builtin.lsp_definitions, {})
-      vim.keymap.set('n', 'gi', builtin.lsp_implementations, {})
       vim.keymap.set('n', '<C-b>', builtin.buffers, {})
       -- Find files
       vim.keymap.set('n', '<C-p>', function()
+        vim.notify(vim.fn.getcwd())
         builtin.find_files {
-          cwd = vim.loop.cwd(),
+          cwd = vim.fn.getcwd(),
           no_ignore = false,
           no_ignore_parent = false,
           hidden = false,
+          find_command = {
+            'rg',
+            '--files',
+            '--hidden',
+            '--no-ignore',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--iglob',
+            '!**/node_modules/',
+            '--iglob',
+            '!**/.git/',
+            '--iglob',
+            '!**/dist/',
+            '--iglob',
+            '!**/esm/',
+          },
         }
       end, { desc = 'Find files in cwd' })
       -- Find Neovim configuration files
@@ -82,8 +98,8 @@ return {
                 if selected == nil then
                   return
                 end
-                require('lib.h-path').change_dir_to(selected.value)
-                vim.notify('[CWD] ' .. vim.loop.cwd())
+                vim.fn.chdir(vim.fn.fnameescape(selected.value))
+                vim.notify('[CWD] ' .. selected.value)
                 require('telescope.actions').close(prompt_bufnr)
               end)
               return true

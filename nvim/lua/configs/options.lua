@@ -35,13 +35,12 @@ vim.opt.smartcase = true -- Enable smartcase on '/' search. Automatically case m
 vim.opt.incsearch = true -- Live search on= '/' search. Don't need press enter to start searching
 vim.opt.signcolumn = 'yes' -- Enable signcolumn on left side gutter
 vim.opt.updatetime = 250 -- Decrease update time
-vim.opt.timeoutlen = 300 -- Decrease mapped sequence wait time. (Displays which-key popup sooner)
 vim.opt.splitright = true -- Default split window direction
 vim.opt.splitbelow = true -- Default split window direction
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' } -- Sets how neovim will display certain whitespace characters in the editor.
+vim.opt.autochdir = false
 vim.opt.inccommand = 'split' -- Preview substitutions live, as you type!
 vim.opt.cursorline = true -- Show which line your cursor is on
 vim.opt.scrolloff = 10 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.clipboard = 'unnamedplus'
 vim.api.nvim_exec('language en_US', true)

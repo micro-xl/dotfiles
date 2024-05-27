@@ -1,3 +1,6 @@
+local h_terminal = require 'lib.h-terminal'
+local h_path = require 'lib.h-path'
+
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('v', '$', '$h')
 do -- Wrap the current word in (single/double)quotes
@@ -57,7 +60,7 @@ vim.keymap.set('n', '<C-w>C', ':%bd|e#|bd#<CR>', { silent = true })
 vim.keymap.set('x', 'p', '"_dP', { silent = true })
 
 -- Change CWD to root path of current file
-vim.keymap.set('n', '©', require('lib.h-path').change_cwd_to_root_dir_of_cur_file, { silent = true })
+vim.keymap.set('n', '©', h_path.change_cwd_to_root_dir_of_cur_file, { silent = true })
 
 -- Diagnostics
 vim.keymap.set('n', 'g]', vim.diagnostic.goto_next, {})
@@ -69,26 +72,24 @@ vim.keymap.set('n', '<C-f>', function()
 end, { silent = true })
 
 -- Terminal
-do
-  vim.keymap.set('n', '<C-a>s', function()
-    require('lib.h-terminal').open_terminal_horizontal()
-  end, {})
-  vim.keymap.set('n', '<C-a>v', function()
-    require('lib.h-terminal').open_terminal_vertical()
-  end, {})
-  vim.keymap.set('n', '<C-a>x', function()
-    if require('lib.h-buffer').buf_is_terminal(0) == true then
-      vim.cmd 'q!'
-    end
-  end, { noremap = true, silent = true })
-  vim.keymap.set('t', '<ESC>', '<C-\\><C-n>', { noremap = true })
-  vim.keymap.set('t', '<C-a>s', function()
-    require('lib.h-terminal').open_terminal_horizontal()
-  end, {})
-  vim.keymap.set('t', '<C-a>v', function()
-    require('lib.h-terminal').open_terminal_vertical()
-  end, {})
-  vim.keymap.set('t', '<C-a>x', function()
+vim.keymap.set('n', '<C-a>s', function()
+  h_terminal.open_terminal_horizontal()
+end, {})
+vim.keymap.set('n', '<C-a>v', function()
+  h_terminal.open_terminal_vertical()
+end, {})
+vim.keymap.set('n', '<C-a>x', function()
+  if h_terminal.buf_is_terminal(0) == true then
     vim.cmd 'q!'
-  end, {})
-end
+  end
+end, { noremap = true, silent = true })
+vim.keymap.set('t', '<ESC>', '<C-\\><C-n>', { noremap = true })
+vim.keymap.set('t', '<C-a>s', function()
+  h_terminal.open_terminal_horizontal()
+end, {})
+vim.keymap.set('t', '<C-a>v', function()
+  h_terminal.open_terminal_vertical()
+end, {})
+vim.keymap.set('t', '<C-a>x', function()
+  vim.cmd 'q!'
+end, {})

@@ -27,15 +27,20 @@ return {
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
+          local builtin = require 'telescope.builtin'
           vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {})
           vim.keymap.set('n', 'gh', vim.lsp.buf.hover, {})
           vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, {})
           vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, {})
           vim.keymap.set('n', '<leader>qf', vim.lsp.buf.code_action, {})
-          vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, {})
-          vim.keymap.set('n', 'gt', require('telescope.builtin').lsp_type_definitions, {})
-          vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions, {})
-          vim.keymap.set('n', 'gi', require('telescope.builtin').lsp_implementations, {})
+          vim.keymap.set('n', 'gr', builtin.lsp_references, {})
+          vim.keymap.set('n', 'gt', builtin.lsp_type_definitions, {})
+          vim.keymap.set('n', 'gd', builtin.lsp_definitions, {})
+          vim.keymap.set('n', 'gi', builtin.lsp_implementations, {})
+          vim.keymap.set('n', 'gr', builtin.lsp_references, {})
+          vim.keymap.set('n', 'gt', builtin.lsp_type_definitions, {})
+          vim.keymap.set('n', 'gd', builtin.lsp_definitions, {})
+          vim.keymap.set('n', 'gi', builtin.lsp_implementations, {})
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if client and client.server_capabilities.documentHighlightProvider then
             local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })

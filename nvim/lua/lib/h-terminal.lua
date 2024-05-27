@@ -25,7 +25,7 @@ mod.open_terminal_vertical = function(command_str_nil)
   end
 end
 
-local function buf_is_terminal(bufnr)
+mod.buf_is_terminal = function(bufnr)
   asserter.number(bufnr, 'bufnr')
 
   return vim.bo[bufnr].buftype == 'terminal'
