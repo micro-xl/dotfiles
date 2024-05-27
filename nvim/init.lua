@@ -27,6 +27,8 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({ -- imports each plugins to easly disable the plugins
   -- { import = 'plugins' },
   { import = 'customs.jest' },
+  { import = 'customs.pbcopy' },
+  { import = 'customs.translate' },
   { import = 'plugins.cmp' },
   { import = 'plugins.lsp' },
   { import = 'plugins.oil' },
@@ -44,7 +46,6 @@ require('lazy').setup({ -- imports each plugins to easly disable the plugins
   { import = 'plugins.bufferline' },
   { import = 'plugins.treesitter' },
   { import = 'plugins.formatting' },
-  { import = 'plugins.system-copy' },
   -- { import = 'plugins.todo-comment' },
   { import = 'plugins.indent-blankline' },
   { import = 'plugins.autopairs' },
@@ -68,3 +69,4 @@ require('lazy').setup({ -- imports each plugins to easly disable the plugins
     border = 'rounded',
   },
 })
+

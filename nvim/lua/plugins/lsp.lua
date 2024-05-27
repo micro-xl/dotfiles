@@ -1,11 +1,11 @@
 --[[ LspConfiguration ]]
 
 return {
-  { -- Collections of Configuration for LSP
+  {                         -- Collections of Configuration for LSP
     'neovim/nvim-lspconfig',
     event = { 'VimEnter' }, -- TODO: filetype으로 lazy loading 하려고 해도 config가 자꾸 안되는 이슈가있다
     dependencies = {
-      { -- Manageing the external tools (LSP, DAP, Linter & Foramtter) for Cross-Flatform
+      {                     -- Manageing the external tools (LSP, DAP, Linter & Foramtter) for Cross-Flatform
         'williamboman/mason.nvim',
         config = true,
       },
@@ -76,7 +76,8 @@ return {
         end,
       })
 
-      local capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(), require('cmp_nvim_lsp').default_capabilities())
+      local capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(),
+        require('cmp_nvim_lsp').default_capabilities())
 
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.

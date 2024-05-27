@@ -7,7 +7,7 @@ return {
     branch = '0.1.x',
     dependencies = {
       'nvim-lua/plenary.nvim',
-      { 'folke/noice.nvim' }, -- TODO: popupwindow의 winblend option이 함수로 들어가는 이상한 이슈가 있는데, noice가 로드되면서 해당 옵션을 덮어써줄수있음.
+      { 'folke/noice.nvim' }, -- TODO: popupwindow의 winblend option이 값이아니라 함수로 들어가는 이상한 이슈가 있는데, noice가 로드되면서 해당 옵션을 덮어써줄수있음.
       { -- Use native fzf for telescope fuzzy finding
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
@@ -41,35 +41,6 @@ return {
       vim.keymap.set('v', '<space>f', builtin.grep_string, {})
       vim.keymap.set('n', 'giw', builtin.grep_string, {})
       vim.keymap.set('n', '<C-b>', builtin.buffers, {})
-      -- Find files
-      vim.keymap.set('n', '<C-p>', function()
-        vim.notify(vim.fn.getcwd())
-        builtin.find_files {
-          cwd = vim.fn.getcwd(),
-          no_ignore = false,
-          no_ignore_parent = false,
-          hidden = false,
-          find_command = {
-            'rg',
-            '--files',
-            '--hidden',
-            '--no-ignore',
-            '--no-heading',
-            '--with-filename',
-            '--line-number',
-            '--column',
-            '--smart-case',
-            '--iglob',
-            '!**/node_modules/',
-            '--iglob',
-            '!**/.git/',
-            '--iglob',
-            '!**/dist/',
-            '--iglob',
-            '!**/esm/',
-          },
-        }
-      end, { desc = 'Find files in cwd' })
       -- Find Neovim configuration files
       vim.keymap.set('n', '<space>n', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
@@ -107,6 +78,17 @@ return {
           }, {})
           :find()
       end, { desc = 'Change directory to the selected bookmarks' })
+
+      -- Find files
+      vim.keymap.set('n', '<C-p>', function()
+        vim.notify(vim.fn.getcwd())
+        builtin.find_files {
+          cwd = vim.fn.getcwd(),
+          no_ignore = false,
+          no_ignore_parent = false,
+          hidden = false,
+        }
+      end, { desc = 'Find files in cwd' })
     end,
   },
 }
