@@ -1,18 +1,20 @@
-local path_utils = require 'lib.h-path'
-local terminal_utils = require 'lib.h-terminal'
-local window_utils = require 'lib.h-window'
-local string_utils = require 'lib.h-string'
+local h_path = require 'lib.h-path'
+local h_terminal = require 'lib.h-terminal'
+local h_window = require 'lib.h-window'
+local h_string = require 'lib.h-string'
 local pipe = require('lib.h-function').pipe
 
 return {
   {
     dir = 'customs.jest',
+    keys = { '<F5>', '<leader><F5>', '<F6>', '<leader><F6>' },
     cmd = { 'JestSingle', 'JestSingleDebug', 'JestSingleWatch', 'JestSingleCopy', 'JestSingleCopyDebug', 'JestSingleCopyWatch' },
     config = function()
       local function parse_test_suite()
-        local current_line = string_utils.trim(vim.api.nvim_buf_get_lines(0, vim.fn.line '.' - 1, vim.fn.line '.', false)[1])
+        local current_line = h_string.trim(vim.api.nvim_buf_get_lines(0, vim.fn.line '.' - 1, vim.fn.line '.', false)[1])
         local test_signature = { 'describe', 'it', 'test', 'itLocal' }
-        local test_suite_name = current_line:match('[' .. table.concat(test_signature, '') .. ']+' .. "%([\"']([^']+)[\"'].-[,%)%s]")
+        local test_suite_name = current_line:match('[' ..
+          table.concat(test_signature, '') .. ']+' .. "%([\"']([^']+)[\"'].-[,%)%s]")
         if test_suite_name == nil then
           return nil
         end
@@ -33,12 +35,12 @@ return {
         test_name = string.gsub(test_name, '%)', '\\)')
 
         local command = (options.inspect == true and 'env NODE_OPTIONS="$(echo $NODE_OPTIONS) --inspect" ' or ' ')
-          .. 'pnpm jest '
-          .. (options.watch == true and '--watch' or '')
-          .. ' -t '
-          .. test_name
-          .. ' '
-          .. file_name
+            .. 'pnpm jest'
+            .. (options.watch == true and ' --watch ' or ' ')
+            .. '-t '
+            .. test_name
+            .. ' '
+            .. file_name
         return command
       end
 
@@ -51,16 +53,16 @@ return {
           return
         end
 
-        path_utils.change_dir_to(path_utils.get_module_rootdir_of_cur_file())
+        vim.fn.chdir(h_path.get_module_rootdir_of_cur_file())
 
-        local cmd = build_command(test_name, path_utils.get_current_file_path(), options)
-        cmd = string_utils.escape_question_mark(cmd)
+        local cmd = build_command(test_name, h_path.get_current_file_path(), options)
+        cmd = h_string.escape_question_mark(cmd)
 
-        local windowRatio = window_utils.getCurrentWindowRatio()
+        local windowRatio = h_window.getCurrentWindowRatio()
         if windowRatio.height >= windowRatio.width then
-          terminal_utils.open_terminal_horizontal(cmd)
+          h_terminal.open_terminal_horizontal(cmd)
         else
-          terminal_utils.open_terminal_vertical(cmd)
+          h_terminal.open_terminal_vertical(cmd)
         end
       end
 
@@ -78,15 +80,16 @@ return {
 
       -- JestSingleCopy, JestSingleCopyWatch
       local function jest_single_copy(options)
-        local test_module_root = path_utils.get_module_rootdir_of_cur_file()
+        local test_module_root = h_path.get_module_rootdir_of_cur_file()
         local test_name = parse_test_suite()
         if test_name == nil then
           vim.notify 'No test found in this line'
           return
         end
         local cd_cmd = 'cd ' .. test_module_root
-        local jest_cmd = build_command(test_name, path_utils.get_current_file_path(), options)
-        local escape_unnecessary_chars = pipe(string_utils.escape_double_quote, string_utils.escape_dollar_sign, string_utils.escape_question_mark)
+        local jest_cmd = build_command(test_name, h_path.get_current_file_path(), options)
+        local escape_unnecessary_chars = pipe(h_string.escape_double_quote, h_string.escape_dollar_sign,
+          h_string.escape_question_mark)
         local system_copy_cmd = 'echo "' .. cd_cmd .. ' && ' .. escape_unnecessary_chars(jest_cmd) .. '" | pbcopy'
         vim.fn.system(system_copy_cmd)
       end
