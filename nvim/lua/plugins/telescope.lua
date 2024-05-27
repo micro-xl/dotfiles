@@ -1,4 +1,4 @@
--- Telescope provides a  Fuzzy Finder for files, lsp, etc
+--[[ Telescope provides a  Fuzzy Finder for files, lsp, etc ]]
 
 return {
   {
@@ -8,7 +8,7 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
       { 'folke/noice.nvim' }, -- TODO: popupwindow의 winblend option이 값이아니라 함수로 들어가는 이상한 이슈가 있는데, noice가 로드되면서 해당 옵션을 덮어써줄수있음.
-      { -- Use native fzf for telescope fuzzy finding
+      {                       -- Use native fzf for telescope fuzzy finding
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
         cond = function()
@@ -48,40 +48,40 @@ return {
       -- Bookmarks
       vim.keymap.set('n', 'π', function()
         require('telescope.pickers')
-          .new({
-            prompt_title = 'Bookmarks',
-            result_title = 'In ~/.bookmarks',
-            finder = require('telescope.finders').new_table {
-              results = vim.fn.systemlist 'cat ~/.bookmarks',
-              entry_maker = function(entry)
-                return {
-                  value = entry,
-                  ordinal = entry,
-                  display = entry,
-                }
+            .new({
+              prompt_title = 'Bookmarks',
+              result_title = 'In ~/.bookmarks',
+              finder = require('telescope.finders').new_table {
+                results = vim.fn.systemlist 'cat ~/.bookmarks',
+                entry_maker = function(entry)
+                  return {
+                    value = entry,
+                    ordinal = entry,
+                    display = entry,
+                  }
+                end,
+              },
+              sorter = require('telescope.config').values.generic_sorter {},
+              previewer = require('telescope.previewers').vim_buffer_cat.new {},
+              attach_mappings = function(_, map)
+                map('i', '<CR>', function(prompt_bufnr)
+                  local selected = require('telescope.actions.state').get_selected_entry()
+                  if selected == nil then
+                    return
+                  end
+
+                  vim.api.nvim_exec('cd ' .. vim.fn.fnameescape(selected.value), false)
+                  vim.notify('[CWD] ' .. selected.value)
+                  require('telescope.actions').close(prompt_bufnr)
+                end)
+                return true
               end,
-            },
-            sorter = require('telescope.config').values.generic_sorter {},
-            previewer = require('telescope.previewers').vim_buffer_cat.new {},
-            attach_mappings = function(_, map)
-              map('i', '<CR>', function(prompt_bufnr)
-                local selected = require('telescope.actions.state').get_selected_entry()
-                if selected == nil then
-                  return
-                end
-                vim.fn.chdir(vim.fn.fnameescape(selected.value))
-                vim.notify('[CWD] ' .. selected.value)
-                require('telescope.actions').close(prompt_bufnr)
-              end)
-              return true
-            end,
-          }, {})
-          :find()
+            }, {})
+            :find()
       end, { desc = 'Change directory to the selected bookmarks' })
 
       -- Find files
       vim.keymap.set('n', '<C-p>', function()
-        vim.notify(vim.fn.getcwd())
         builtin.find_files {
           cwd = vim.fn.getcwd(),
           no_ignore = false,
