@@ -20,6 +20,11 @@ return {
           ['<leader>1'] = 'close_window',
         },
       },
+      follow_current_file = {
+        enabled = false,
+      },
+      hijack_netrw_behavior = 'disabled',
+      use_libuv_file_watcher = true,
     },
   },
 }

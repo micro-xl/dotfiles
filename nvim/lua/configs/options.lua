@@ -43,4 +43,5 @@ vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' } -- Sets how neov
 vim.opt.inccommand = 'split' -- Preview substitutions live, as you type!
 vim.opt.cursorline = true -- Show which line your cursor is on
 vim.opt.scrolloff = 10 -- Minimal number of screen lines to keep above and below the cursor.
+vim.opt.clipboard = 'unnamedplus'
 vim.api.nvim_exec('language en_US', true)

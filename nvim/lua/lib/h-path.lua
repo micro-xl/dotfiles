@@ -95,8 +95,8 @@ end
 
 local function change_cwd_to_root_dir_of_cur_file()
   local rootDir = get_module_rootdir_of_cur_file()
-  vim.notify('CWD: ' .. rootDir)
   change_dir_to(rootDir)
+  vim.notify('CWD: ' .. rootDir)
 end
 
 return {

@@ -82,8 +82,8 @@ return {
                 if selected == nil then
                   return
                 end
-                vim.cmd('cd ' .. selected.value)
-                vim.notify('[CWD] ' .. selected.value)
+                require('lib.h-path').change_dir_to(selected.value)
+                vim.notify('[CWD] ' .. vim.loop.cwd())
                 require('telescope.actions').close(prompt_bufnr)
               end)
               return true

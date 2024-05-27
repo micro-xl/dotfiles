@@ -47,6 +47,7 @@ require('lazy').setup({ -- imports each plugins to easly disable the plugins
   { import = 'plugins.system-copy' },
   -- { import = 'plugins.todo-comment' },
   { import = 'plugins.indent-blankline' },
+  { import = 'plugins.autopairs' },
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {

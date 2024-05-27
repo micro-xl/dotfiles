@@ -77,7 +77,7 @@ do
     require('lib.h-terminal').open_terminal_vertical()
   end, {})
   vim.keymap.set('n', '<C-a>x', function()
-    if require('h-buffer').buf_is_terminal(0) == true then
+    if require('lib.h-buffer').buf_is_terminal(0) == true then
       vim.cmd 'q!'
     end
   end, { noremap = true, silent = true })
