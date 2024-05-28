@@ -49,6 +49,7 @@ require('lazy').setup({ -- imports each plugins to easly disable the plugins
   -- { import = 'plugins.todo-comment' },
   { import = 'plugins.indent-blankline' },
   { import = 'plugins.autopairs' },
+  { import = 'plugins.copilot' },
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {
@@ -69,4 +70,3 @@ require('lazy').setup({ -- imports each plugins to easly disable the plugins
     border = 'rounded',
   },
 })
-
