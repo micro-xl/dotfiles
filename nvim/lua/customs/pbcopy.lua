@@ -14,7 +14,7 @@ return {
     vim.keymap.set('x', 'cp', function()
       local selected = h_buffer.get_visual_selection()
       local escape = pipe(h_string.escape_dollar_sign, h_string.escape_double_quote)
-      h_shell.pexec('echo "' .. escape(selected) .. '" | ' .. 'pbcopy')
+      h_shell.pexec('printf "%s" "' .. escape(selected) .. '" | ' .. 'pbcopy')
     end, {})
   end,
 }
