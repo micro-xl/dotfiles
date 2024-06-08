@@ -1,11 +1,13 @@
+local h_path = require 'lib.h-path'
+local h_lsp = require 'lib.h-lsp'
 --[[ LspConfiguration ]]
 
 return {
-  {                         -- Collections of Configuration for LSP
+  { -- Collections of Configuration for LSP
     'neovim/nvim-lspconfig',
     event = { 'VimEnter' }, -- TODO: filetype으로 lazy loading 하려고 해도 config가 자꾸 안되는 이슈가있다
     dependencies = {
-      {                     -- Manageing the external tools (LSP, DAP, Linter & Foramtter) for Cross-Flatform
+      { -- Manageing the external tools (LSP, DAP, Linter & Foramtter) for Cross-Flatform
         'williamboman/mason.nvim',
         config = true,
       },
@@ -76,8 +78,7 @@ return {
         end,
       })
 
-      local capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(),
-        require('cmp_nvim_lsp').default_capabilities())
+      local capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(), require('cmp_nvim_lsp').default_capabilities())
 
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -105,6 +106,11 @@ return {
           },
         },
         tsserver = {
+          on_attach = function(client, bufnr)
+            vim.api.nvim_create_user_command('TsOrganizeImport', function()
+              h_lsp.ts.organize_import(bufnr, h_path.get_current_file_path())
+            end, {})
+          end,
           root_dir = require('lspconfig').util.root_pattern('package.json', 'tsconfig.json', 'jsconfig.json', '.git'),
           init_options = {
             preferences = {
@@ -115,7 +121,7 @@ return {
               includeAutomaticOptionalChainCompletions = true,
               includeCompletionsWithClassMemberSnippets = true,
               includeCompletionsWithInsertText = true,
-              importModuleSpecifierPreference = 'relative', -- 'auto',
+              importModuleSpecifierPreference = 'auto', -- 'auto' | 'relative',
               importModuleSpecifierEnding = 'minimal',
               provideRefactorNotApplicableReason = true,
               allowRenameOfImportPath = true,
@@ -152,6 +158,7 @@ return {
           function(server_name)
             local server = servers[server_name] or {}
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+
             -- server.handlers = {
             --   ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' }),
             --   ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' }),

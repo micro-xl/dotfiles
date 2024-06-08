@@ -178,6 +178,7 @@ return {
           },
         },
       }
+      cmp.setup.filetype({ 'oil' }, { enabled = false })
     end,
   },
 }

@@ -6,6 +6,7 @@ vim.g.copilot_filetype = {
   ['json'] = true,
   ['html'] = true,
   ['lua'] = true,
+  ['oil'] = false,
 }
 
 return {
