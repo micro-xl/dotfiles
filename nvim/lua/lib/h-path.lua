@@ -90,7 +90,8 @@ local function get_current_dir_path()
 end
 
 local function change_dir_to(dir)
-  vim.fn.chdir(vim.fn.fnameescape(dir))
+  vim.cmd('cd ' .. vim.fn.fnameescape(dir))
+  -- vim.fn.chdir(vim.fn.fnameescape(dir))
 end
 
 local function change_cwd_to_root_dir_of_cur_file()

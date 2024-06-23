@@ -121,7 +121,7 @@ return {
               includeAutomaticOptionalChainCompletions = true,
               includeCompletionsWithClassMemberSnippets = true,
               includeCompletionsWithInsertText = true,
-              importModuleSpecifierPreference = 'auto', -- 'auto' | 'relative',
+              importModuleSpecifierPreference = 'relative', -- 'auto' | 'relative',
               importModuleSpecifierEnding = 'minimal',
               provideRefactorNotApplicableReason = true,
               allowRenameOfImportPath = true,

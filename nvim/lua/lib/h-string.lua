@@ -2,7 +2,7 @@ local mod = {}
 
 ---@param str string
 mod.trim = function(str)
-  return (str:gsub("^%s*(.-)%s*$", "%1"))
+  return (str:gsub('^%s*(.-)%s*$', '%1'))
 end
 
 ---@param str string
@@ -12,7 +12,7 @@ end
 
 ---@param str string
 mod.is_not_empty_string = function(str)
-  return not is_empty_string(str)
+  return not mod.is_empty_string(str)
 end
 
 ---@param str string
@@ -71,4 +71,4 @@ mod.includes = function(str, pattern)
   return string.find(str, pattern) ~= nil
 end
 
-return mod;
+return mod

@@ -1,3 +1,6 @@
+local exec = require('lib.h-shell').exec
+local trim = require('lib.h-string').trim
+
 --[[ Telescope provides a  Fuzzy Finder for files, lsp, etc ]]
 
 return {
@@ -83,7 +86,7 @@ return {
       -- Find files
       vim.keymap.set('n', '<C-p>', function()
         builtin.find_files {
-          cwd = vim.fn.getcwd(),
+          cwd = vim.fn.getcwd(-1, -1),
           no_ignore = false,
           no_ignore_parent = false,
           hidden = false,

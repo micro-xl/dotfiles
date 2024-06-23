@@ -42,7 +42,7 @@ mod.exec = function(cmd_str)
   if stderr ~= nil then
     error(stderr)
   end
-  return stdout
+  return stdout or ''
 end
 
 return mod

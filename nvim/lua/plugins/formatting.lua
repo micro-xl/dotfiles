@@ -16,11 +16,19 @@ return {
           lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
         }
       end,
+      formatters = {
+        jq_formatter = {
+          command = 'jq',
+          stdin = true,
+        },
+      },
       formatters_by_ft = {
         lua = { 'stylua' },
         -- python = { "isort", "black" },
         javascript = { { 'prettier' } },
         typescript = { { 'prettier' } },
+        -- json = { { 'prettier' } },
+        json = { 'jq_formatter' },
       },
     },
   },

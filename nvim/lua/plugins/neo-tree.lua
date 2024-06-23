@@ -11,17 +11,33 @@ return {
   },
   cmd = 'Neotree',
   keys = {
-    { '<leader>1', ':Neotree reveal<CR>', { desc = 'NeoTree reveal' } },
+    -- { '<leader>1', ':Neotree ' .. vim.fn.getcwd(-1, -1) .. '<CR>', { desc = 'NeoTree', silent = true } },
+    {
+      '<leader>1',
+      function()
+        vim.cmd('Neotree' .. vim.fn.getcwd(-1, -1))
+      end,
+      { desc = 'NeoTree', silent = true },
+    },
   },
   opts = {
     filesystem = {
       window = {
+        position = 'current', -- left
+        -- width = 100,
         mappings = {
           ['<leader>1'] = 'close_window',
         },
       },
       follow_current_file = {
         enabled = false,
+      },
+      filtered_items = {
+        visible = true,
+        show_hidden_count = true,
+        hide_dotfiles = false,
+        hide_hidden = false,
+        hide_gitignored = false,
       },
       hijack_netrw_behavior = 'disabled',
       use_libuv_file_watcher = true,
