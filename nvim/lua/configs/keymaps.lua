@@ -49,10 +49,10 @@ end
 -- Save Ctrl S
 vim.keymap.set('i', '', '<ESC>:w<CR>', { silent = true })
 vim.keymap.set('n', '<C-s>', ':w<CR>', { silent = true })
-vim.keymap.set('n', '{', ':bp<CR>', { silent = true })
-vim.keymap.set('n', '}', ':bn<CR>', { silent = true })
-vim.keymap.set('t', '{', ':bp<CR>', { silent = true })
-vim.keymap.set('t', '}', ':bn<CR>', { silent = true })
+vim.keymap.set('n', 'œ', ':bp<CR>', { silent = true })
+vim.keymap.set('n', '∑', ':bn<CR>', { silent = true })
+vim.keymap.set('t', 'œ', '<C-\\><C-n>bp<CR>', { silent = true })
+vim.keymap.set('t', '∑', '<C-\\><C-n>:bn<CR>', { silent = true })
 
 -- Close all buffer but current one
 vim.keymap.set('n', '<C-w>C', ':%bd|e#|bd#<CR>', { silent = true })

@@ -23,8 +23,8 @@ return {
   opts = {
     filesystem = {
       window = {
-        position = 'current', -- left
-        -- width = 100,
+        position = 'left', -- left | current
+        width = 100,
         mappings = {
           ['<leader>1'] = 'close_window',
         },
