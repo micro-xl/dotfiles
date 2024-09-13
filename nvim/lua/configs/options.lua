@@ -30,8 +30,8 @@ vim.opt.langmap = 'ㅁa,ㅠb,ㅊc,ㅇd,ㄷe,ㄹf,ㅎg,ㅗh,ㅑi,ㅓj,ㅏk,ㅣl,�
 vim.opt.showmode = false -- Show current mode. It is replaced by status line
 vim.opt.breakindent = false -- Enable break indent
 vim.opt.undofile = true -- Save undo history
-vim.opt.ignorecase = true -- Ignore case on '/' search
-vim.opt.smartcase = true -- Enable smartcase on '/' search. Automatically case match applied
+vim.opt.ignorecase = false -- Ignore case on '/' search
+-- vim.opt.smartcase = true -- Enable smartcase on '/' search. Automatically case match applied
 vim.opt.incsearch = true -- Live search on= '/' search. Don't need press enter to start searching
 vim.opt.signcolumn = 'yes' -- Enable signcolumn on left side gutter
 vim.opt.updatetime = 250 -- Decrease update time

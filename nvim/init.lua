@@ -47,6 +47,7 @@ require('lazy').setup({ -- imports each plugins to easly disable the plugins
   { import = 'plugins.treesitter' },
   { import = 'plugins.formatting' },
   -- { import = 'plugins.todo-comment' },
+  { import = 'plugins.outline' },
   { import = 'plugins.indent-blankline' },
   { import = 'plugins.autopairs' },
   { import = 'plugins.copilot' },

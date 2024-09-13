@@ -27,6 +27,8 @@ return {
         -- python = { "isort", "black" },
         javascript = { { 'prettier' } },
         typescript = { { 'prettier' } },
+        javascriptreact = { { 'prettier' } },
+        typescriptreact = { { 'prettier' } },
         -- json = { { 'prettier' } },
         json = { 'jq_formatter' },
       },

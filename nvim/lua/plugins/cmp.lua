@@ -45,7 +45,23 @@ return {
         local snp = luasnip.snippet
         local ins = luasnip.insert_node
         local fmt = require('luasnip.extras.fmt').fmt
+        local text = luasnip.text_node
         luasnip.config.setup {}
+        luasnip.add_snippets('javascript', {
+          snp('ylog', {
+            text 'function yellowLog(...args) {',
+            text { '', '  const log = args.reduce((acc, cur, i) => {' },
+            text { '', "    const space = i > 0 ? ' ' : '';" },
+            text { '', "    if (typeof cur === 'string') return acc + space + cur;" },
+            text { '', "    if (cur === null) return acc + space + 'null';" },
+            text { '', "    if (cur === undefined) return acc + space + 'undefined';" },
+            text { '', "    if (Number.isNaN(cur)) return acc + space + 'NaN';" },
+            text { '', '    return acc + space + JSON.stringify(cur, null, 2);' },
+            text { '', "  }, '');" },
+            text { '', "  console.log('\\x1b[30m\\x1b[43m%s\\x1b[0m', log);" },
+            text { '', '}' },
+          }),
+        })
         luasnip.add_snippets('typescript', {
           snp(
             'desc',
@@ -64,6 +80,19 @@ return {
               }
             )
           ),
+          snp('ylog', {
+            text 'function yellowLog(...args: any[]) {',
+            text { '', '  const log = args.reduce((acc, cur, i) => {' },
+            text { '', "    const space = i > 0 ? ' ' : '';" },
+            text { '', "    if (typeof cur === 'string') return acc + space + cur;" },
+            text { '', "    if (cur === null) return acc + space + 'null';" },
+            text { '', "    if (cur === undefined) return acc + space + 'undefined';" },
+            text { '', "    if (Number.isNaN(cur)) return acc + space + 'NaN';" },
+            text { '', '    return acc + space + JSON.stringify(cur, null, 2);' },
+            text { '', "  }, '');" },
+            text { '', "  console.log('\\x1b[30m\\x1b[43m%s\\x1b[0m', log);" },
+            text { '', '}' },
+          }),
           snp(
             'pbcopy',
             fmt(
