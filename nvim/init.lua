@@ -50,7 +50,9 @@ require('lazy').setup({ -- imports each plugins to easly disable the plugins
   { import = 'plugins.outline' },
   { import = 'plugins.indent-blankline' },
   { import = 'plugins.autopairs' },
+  { import = 'plugins.render-markdown' },
   { import = 'plugins.copilot' },
+  { import = 'plugins.avante' },
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {

@@ -1,12 +1,33 @@
 --[[ Theme and style setting ]]
 
+function load_kanagawa()
+  local kanagawa = require 'kanagawa'
+  kanagawa.setup {
+    compile = true, -- enable compiling the colorscheme
+    undercurl = true, -- enable undercurls
+    commentStyle = { italic = true },
+    functionStyle = {},
+    keywordStyle = { italic = true },
+    statementStyle = { bold = true },
+    typeStyle = {},
+    transparent = false, -- whethere set or not set background color
+    dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+    terminalColors = true, -- define vim.g.terminal_color_{0,17}
+    overrides = function(colors) -- add/modify highlights
+      return {}
+    end,
+  }
+  kanagawa.load 'dragon' -- dragon | wave | lotus
+end
+
 return {
   {
     'rebelot/kanagawa.nvim',
     event = 'VimEnter',
     config = function()
-      require('kanagawa').load 'wave'
-      vim.api.nvim_set_hl(0, 'Normal', { bg = 'none', fg = '#787878' })
+      load_kanagawa()
+      -- font : iosevka
+      vim.api.nvim_set_hl(0, 'Normal', { bg = '#010112', fg = '#787878' })
       vim.api.nvim_set_hl(0, 'LineNr', { fg = '#787878', bg = 'none' })
       vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#787878' })
       vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'none', fg = 'none' })
