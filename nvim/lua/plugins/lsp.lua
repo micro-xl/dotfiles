@@ -131,6 +131,11 @@ return {
             },
           },
         },
+        svelte = {
+          root_dir = require('lspconfig').util.root_pattern('package.json', 'tsconfig.json', 'jsconfig.json', '.git'),
+          filetypes = { 'svelte' },
+          cmd = { 'svelteserver', '--stdio' },
+        },
         rust_analyzer = {
           cmd = { vim.env.HOME .. '/.cargo/bin/rust-analyzer' },
           settings = {
