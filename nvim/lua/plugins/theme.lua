@@ -1,5 +1,5 @@
 --[[ Theme and style setting ]]
-
+--
 function load_kanagawa()
   local kanagawa = require 'kanagawa'
   kanagawa.setup {
@@ -17,7 +17,89 @@ function load_kanagawa()
       return {}
     end,
   }
-  kanagawa.load 'dragon' -- dragon | wave | lotus
+  kanagawa.load 'wave' -- dragon | wave | lotus
+  vim.api.nvim_set_hl(0, 'Normal', { bg = 'none', fg = '#787878' })
+  vim.api.nvim_set_hl(0, 'LineNr', { fg = '#787878', bg = 'none' })
+  vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#787878' })
+  vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'none', fg = 'none' })
+  vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'none', fg = '#ca8498' })
+  vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none', fg = '#ca8498' })
+  vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'FloatTitle', { bg = 'none', fg = '#FFFFFF' })
+  vim.api.nvim_set_hl(0, 'GitSignsAdd', { bg = 'none', fg = '#5f8559' })
+  vim.api.nvim_set_hl(0, 'GitSignsChange', { bg = 'none', fg = '#a6a04c' })
+  vim.api.nvim_set_hl(0, 'GitSignsDelete', { bg = 'none', fg = '#944051' })
+  vim.api.nvim_set_hl(0, 'GitSignsStagedAdd', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'GitSignsStagedAddLn', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'GitSignsStagedAddNr', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'GitSignsStagedChange', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'GitSignsStagedDelete', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'GitSignsStagedChangeLn', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'GitSignsStagedChangeNr', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'GitSignsStagedDeleteNr', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'GitSignsStagedTopdelete', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'GitSignsStagedTopdeleteNr', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'GitSignsStagedChangedelete', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'GitSignsStagedChangedeleteLn', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'GitSignsStagedChangedeleteNr', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'DiagnosticSignOk', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'DiagnosticSignHint', { bg = 'none', fg = '#9fb386' })
+  vim.api.nvim_set_hl(0, 'DiagnosticSignWarn', { bg = 'none', fg = '#c29d19' })
+  vim.api.nvim_set_hl(0, 'DiagnosticSignError', { bg = 'none', fg = '#963838' })
+  vim.api.nvim_set_hl(0, 'DiagnosticSignInfo', { bg = 'none', fg = '#9fb386' })
+  vim.api.nvim_set_hl(0, 'DiagnosticUnderlineError', { fg = '#963838', undercurl = true })
+  vim.api.nvim_set_hl(0, 'DiagnosticUnderlineWarn', { fg = '#c29d19', undercurl = true, underdashed = false })
+  vim.api.nvim_set_hl(0, 'TelescopeBorder', { bg = 'none', fg = '#ca8498' })
+  vim.api.nvim_set_hl(0, 'LspInfoBorder', { bg = 'none', fg = '#ca8498' })
+  vim.api.nvim_set_hl(0, 'MsgArea', { bg = 'none', fg = '#ca8498' })
+  vim.g.terminal_color_0 = '#160017'
+
+  vim.api.nvim_set_hl(0, 'TelescopeNormal', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'DiagnosticUnderlineInfo', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'DiagnositcError', { bg = 'none', fg = '#FF4051' })
+end
+
+function load_onedark()
+  require('onedark').setup {
+    -- Main options --
+    style = 'light', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+    transparent = false, -- Show/hide background
+    term_colors = true, -- Change terminal color as per the selected theme style
+    ending_tildes = false, -- Show the end-of-buffer tildes. By default they are hidden
+    cmp_itemkind_reverse = false, -- reverse item kind highlights in cmp menu
+
+    -- toggle theme style ---
+    toggle_style_key = nil, -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
+    toggle_style_list = { 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer', 'light' }, -- List of styles to toggle between
+
+    -- Change code style ---
+    -- Options are italic, bold, underline, none
+    -- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
+    code_style = {
+      comments = 'italic',
+      keywords = 'none',
+      functions = 'none',
+      strings = 'none',
+      variables = 'none',
+    },
+
+    -- Lualine options --
+    lualine = {
+      transparent = false, -- lualine center bar transparency
+    },
+
+    -- Custom Highlights --
+    colors = {}, -- Override default colors
+    highlights = {}, -- Override highlight groups
+
+    -- Plugins Config --
+    diagnostics = {
+      darker = true, -- darker colors for diagnostic
+      undercurl = true, -- use undercurl instead of underline for diagnostics
+      background = true, -- use background color for virtual text
+    },
+  }
+  vim.cmd.colorscheme 'onedark'
 end
 
 function load_catppuccin()
@@ -103,56 +185,107 @@ function load_cyberdream()
   vim.cmd 'colorscheme cyberdream'
 end
 
+function load_material()
+  vim.g.material_style = 'darker' --  darker | lighter | oceanic | palenight | deep ocean
+  require('material').setup {
+
+    contrast = {
+      terminal = true, -- Enable contrast for the built-in terminal
+      sidebars = true, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
+      floating_windows = true, -- Enable contrast for floating windows
+      cursor_line = false, -- Enable darker background for the cursor line
+      lsp_virtual_text = true, -- Enable contrasted background for lsp virtual text
+      non_current_windows = false, -- Enable contrasted background for non-current windows
+      filetypes = {}, -- Specify which filetypes get the contrasted (darker) background
+    },
+
+    styles = { -- Give comments style such as bold, italic, underline etc.
+      comments = { --[[ italic = true ]]
+      },
+      strings = { --[[ bold = true ]]
+      },
+      keywords = { --[[ underline = true ]]
+      },
+      functions = { --[[ bold = true, undercurl = true ]]
+      },
+      variables = {},
+      operators = {},
+      types = {},
+    },
+
+    plugins = { -- Uncomment the plugins that you use to highlight them
+      -- Available plugins:
+      -- "coc",
+      -- "colorful-winsep",
+      -- "dap",
+      -- "dashboard",
+      -- "eyeliner",
+      -- "fidget",
+      -- "flash",
+      -- "gitsigns",
+      -- "harpoon",
+      -- "hop",
+      -- "illuminate",
+      -- "indent-blankline",
+      -- "lspsaga",
+      -- "mini",
+      -- "neogit",
+      -- "neotest",
+      -- "neo-tree",
+      -- "neorg",
+      -- "noice",
+      -- "nvim-cmp",
+      -- "nvim-navic",
+      -- "nvim-tree",
+      -- "nvim-web-devicons",
+      -- "rainbow-delimiters",
+      -- "sneak",
+      -- "telescope",
+      -- "trouble",
+      -- "which-key",
+      -- "nvim-notify",
+    },
+
+    disable = {
+      colored_cursor = false, -- Disable the colored cursor
+      borders = false, -- Disable borders between vertically split windows
+      background = false, -- Prevent the theme from setting the background (NeoVim then uses your terminal background)
+      term_colors = false, -- Prevent the theme from setting terminal colors
+      eob_lines = false, -- Hide the end-of-buffer lines
+    },
+
+    high_visibility = {
+      lighter = false, -- Enable higher contrast text for lighter style
+      darker = false, -- Enable higher contrast text for darker style
+    },
+
+    lualine_style = 'default', -- Lualine style ( can be 'stealth' or 'default' )
+
+    async_loading = true, -- Load parts of the theme asynchronously for faster startup (turned on by default)
+
+    custom_colors = nil, -- If you want to override the default colors, set this to a function
+
+    custom_highlights = {}, -- Overwrite highlights with your own
+  }
+  vim.cmd 'colorscheme material'
+end
+
 --
 return {
   {
-    'scottmckendry/cyberdream.nvim',
+    -- 'marko-cerovac/material.nvim',
+    -- 'navarasu/onedark.nvim',
+    -- 'scottmckendry/cyberdream.nvim',
     -- 'catppuccin/nvim',
-    -- 'rebelot/kanagawa.nvim',
+    'rebelot/kanagawa.nvim',
     event = 'VimEnter',
     config = function()
-      -- load_kanagawa()
+      load_kanagawa()
       -- load_catppuccin()
-      load_cyberdream()
+      -- load_cyberdream()
+      -- load_material()
+      -- load_onedark()
       -- font : iosevka
-      -- vim.api.nvim_set_hl(0, 'Normal', { bg = '#010112', fg = '#787878' })
-      -- vim.api.nvim_set_hl(0, 'LineNr', { fg = '#787878', bg = 'none' })
-      -- vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#787878' })
-      -- vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'none', fg = 'none' })
-      -- vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'none', fg = '#ca8498' })
-      -- vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none', fg = '#ca8498' })
-      -- vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
-      -- vim.api.nvim_set_hl(0, 'FloatTitle', { bg = 'none', fg = '#FFFFFF' })
-      -- vim.api.nvim_set_hl(0, 'GitSignsAdd', { bg = 'none', fg = '#5f8559' })
-      -- vim.api.nvim_set_hl(0, 'GitSignsChange', { bg = 'none', fg = '#a6a04c' })
-      -- vim.api.nvim_set_hl(0, 'GitSignsDelete', { bg = 'none', fg = '#944051' })
-      -- vim.api.nvim_set_hl(0, 'GitSignsStagedAdd', { bg = 'none' })
-      -- vim.api.nvim_set_hl(0, 'GitSignsStagedAddLn', { bg = 'none' })
-      -- vim.api.nvim_set_hl(0, 'GitSignsStagedAddNr', { bg = 'none' })
-      -- vim.api.nvim_set_hl(0, 'GitSignsStagedChange', { bg = 'none' })
-      -- vim.api.nvim_set_hl(0, 'GitSignsStagedDelete', { bg = 'none' })
-      -- vim.api.nvim_set_hl(0, 'GitSignsStagedChangeLn', { bg = 'none' })
-      -- vim.api.nvim_set_hl(0, 'GitSignsStagedChangeNr', { bg = 'none' })
-      -- vim.api.nvim_set_hl(0, 'GitSignsStagedDeleteNr', { bg = 'none' })
-      -- vim.api.nvim_set_hl(0, 'GitSignsStagedTopdelete', { bg = 'none' })
-      -- vim.api.nvim_set_hl(0, 'GitSignsStagedTopdeleteNr', { bg = 'none' })
-      -- vim.api.nvim_set_hl(0, 'GitSignsStagedChangedelete', { bg = 'none' })
-      -- vim.api.nvim_set_hl(0, 'GitSignsStagedChangedeleteLn', { bg = 'none' })
-      -- vim.api.nvim_set_hl(0, 'GitSignsStagedChangedeleteNr', { bg = 'none' })
-      -- vim.api.nvim_set_hl(0, 'DiagnosticSignOk', { bg = 'none' })
-      -- vim.api.nvim_set_hl(0, 'DiagnosticSignHint', { bg = 'none', fg = '#9fb386' })
-      -- vim.api.nvim_set_hl(0, 'DiagnosticSignWarn', { bg = 'none', fg = '#c29d19' })
-      -- vim.api.nvim_set_hl(0, 'DiagnosticSignError', { bg = 'none', fg = '#963838' })
-      -- vim.api.nvim_set_hl(0, 'DiagnosticSignInfo', { bg = 'none', fg = '#9fb386' })
-      -- vim.api.nvim_set_hl(0, 'DiagnosticUnderlineError', { fg = '#963838', undercurl = true })
-      -- vim.api.nvim_set_hl(0, 'DiagnosticUnderlineWarn', { fg = '#c29d19', undercurl = true, underdashed = false })
-      -- vim.api.nvim_set_hl(0, 'TelescopeBorder', { bg = 'none', fg = '#ca8498' })
-      -- vim.api.nvim_set_hl(0, 'LspInfoBorder', { bg = 'none', fg = '#ca8498' })
-      -- vim.api.nvim_set_hl(0, 'MsgArea', { bg = 'none', fg = '#ca8498' })
-
-      -- vim.api.nvim_set_hl(0, 'TelescopeNormal', { bg = 'none' })
-      -- vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { bg = 'none'l})
-      -- vim.api.nvim_set_hl(0, "DiagnositcError", { bg = "none", fg = '#FF4051' })
     end,
   },
 }

@@ -53,6 +53,7 @@ require('lazy').setup({ -- imports each plugins to easly disable the plugins
   { import = 'plugins.render-markdown' },
   { import = 'plugins.copilot' },
   { import = 'plugins.avante' },
+  { import = 'plugins.attempt' },
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {

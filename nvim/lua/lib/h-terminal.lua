@@ -27,7 +27,6 @@ end
 
 mod.buf_is_terminal = function(bufnr)
   asserter.number(bufnr, 'bufnr')
-
   return vim.bo[bufnr].buftype == 'terminal'
 end
 

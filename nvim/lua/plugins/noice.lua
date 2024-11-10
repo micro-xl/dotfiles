@@ -19,8 +19,13 @@ return {
           },
         },
         messages = {
-          -- enabled = false,
+          enabled = false,
           view = 'mini',
+          -- Or can use each implementation for specific situation
+          -- view_error = 'notify', -- view for errors
+          -- view_warn = 'notify', -- view for warnings
+          -- view_history = 'messages', -- view for :messages
+          -- view_search = 'virtualtext', -- view for search count messages. Set to `false` to disable
         },
         popupmenu = {
           backend = 'cmp', -- nui or cmp
@@ -57,6 +62,5 @@ return {
 }
 
 -- cmp 는 nvim-cmp ui 사용중
--- lsp 관련은noice 에 포함된 nui 사용중
---
+-- lsp 관련은 noice 에 포함된 nui 사용중
 -- Messages
