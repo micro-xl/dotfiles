@@ -1,6 +1,8 @@
 local h_window = require 'lib.h-window'
 local h_terminal = require 'lib.h-terminal'
 
+local COMMAND = 'Playground'
+
 local function save_runner(bufnr, cmd)
   return function()
     vim.api.nvim_buf_call(bufnr, function()
@@ -15,9 +17,21 @@ local function save_runner(bufnr, cmd)
   end
 end
 
+local function on_scratch_created(entry)
+  local build_cmd = ''
+  if entry.ext == 'ts' then
+    build_cmd = 'ts-node ' .. entry.path
+  else
+    error('Unsupported extension: ' .. entry.ext)
+  end
+  local bufnr = vim.api.nvim_get_current_buf()
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-s>', '', { callback = save_runner(bufnr, build_cmd) })
+  vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-s>', '', { callback = save_runner(bufnr, build_cmd) })
+end
+
 return {
   'm-demare/attempt.nvim',
-  cmd = 'ScratchNew',
+  cmd = COMMAND,
   config = function()
     local attempt = require 'attempt'
     attempt.setup {
@@ -25,7 +39,7 @@ return {
       autosave = false,
       list_buffers = true, -- This will make them show on other pickers (like :Telescope buffers)
       initial_content = {
-        py = '', -- Either string or function that returns the initial content
+        py = '',           -- Either string or function that returns the initial content
         c = '',
         cpp = '',
         java = '',
@@ -51,20 +65,11 @@ return {
         -- pl = { 'w !perl' },
       },
     }
-    vim.api.nvim_create_user_command('ScratchNew', function()
+    vim.api.nvim_create_user_command(COMMAND, function()
       -- @type entry { ext = string, filename = string, path = string, creation_date = number }
-      local function on_scratch_created(entry)
-        local build_cmd = ''
-        if entry.ext == 'ts' then
-          build_cmd = 'ts-node ' .. entry.path
-        else
-          error('Unsupported extension: ' .. entry.ext)
-        end
-        local bufnr = vim.api.nvim_get_current_buf()
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-s>', '', { callback = save_runner(bufnr, build_cmd) })
-        vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-s>', '', { callback = save_runner(bufnr, build_cmd) })
-      end
       attempt.new_select(on_scratch_created)
-    end, {})
+    end, {
+      desc = 'Create a new scratch buffer'
+    })
   end,
 }

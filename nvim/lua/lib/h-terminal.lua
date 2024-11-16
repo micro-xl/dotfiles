@@ -9,7 +9,7 @@ mod.open_terminal_horizontal = function(command_str_nil)
   vim.opt.bufhidden = 'hide'
   vim.cmd 'startinsert'
   if command_str_nil ~= nil then
-    vim.fn.feedkeys(command_str_nil, vim.api.nvim_replace_termcodes('<CR>', true, false, true))
+    vim.fn.feedkeys(command_str_nil .. vim.api.nvim_replace_termcodes('<CR>', true, false, true))
   end
 end
 
@@ -21,7 +21,7 @@ mod.open_terminal_vertical = function(command_str_nil)
   vim.opt.bufhidden = 'hide'
   vim.cmd 'startinsert'
   if command_str_nil ~= nil then
-    vim.fn.feedkeys(command_str_nil, vim.api.nvim_replace_termcodes('<CR>', true, false, true))
+    vim.fn.feedkeys(command_str_nil .. vim.api.nvim_replace_termcodes('<CR>', true, false, true))
   end
 end
 
