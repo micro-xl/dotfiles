@@ -5,13 +5,11 @@
 
 return {
   'yetone/avante.nvim',
-  cmd = 'AvanteChat',
-  -- event = 'VeryLazy',
-  -- lazy = false,
+  event = 'VeryLazy',
   version = false, -- set this if you want to always pull the latest change
   opts = {
     ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
-    provider = 'openai', -- Recommend using Claude
+    provider = 'openai',                   -- Recommend using Claude
     auto_suggestions_provider = 'copilot', -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
     openai = {
       model = 'gpt-4o',
@@ -29,7 +27,7 @@ return {
       auto_set_highlight_group = true,
       auto_set_keymaps = true,
       auto_apply_diff_after_generation = false,
-      support_paste_from_clipboard = false,
+      support_paste_from_clipboard = true,
     },
     mappings = {
       --- @class AvanteConflictMappings
@@ -65,8 +63,8 @@ return {
     windows = {
       ---@type "right" | "left" | "top" | "bottom"
       position = 'right', -- the position of the sidebar
-      wrap = true, -- similar to vim.o.wrap
-      width = 30, -- default % based on available width
+      wrap = true,        -- similar to vim.o.wrap
+      width = 30,         -- default % based on available width
       sidebar_header = {
         align = 'center', -- left, center, right for title
         rounded = true,
@@ -95,7 +93,7 @@ return {
     'MunifTanjim/nui.nvim',
     --- The below dependencies are optional,
     'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
-    'zbirenbaum/copilot.lua', -- for providers='copilot'
+    'zbirenbaum/copilot.lua',      -- for providers='copilot'
     {
       -- support for image pasting
       'HakonHarnes/img-clip.nvim',

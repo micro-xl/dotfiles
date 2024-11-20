@@ -53,7 +53,8 @@ require('lazy').setup({ -- imports each plugins to easly disable the plugins
   { import = 'plugins.autopairs' },
   { import = 'plugins.render-markdown' },
   { import = 'plugins.copilot' },
-  { import = 'plugins.avante' },
+  -- { import = 'plugins.avante' },
+  { import = 'plugins.copilot-chat' },
   { import = 'plugins.attempt' },
 }, {
   ui = {
