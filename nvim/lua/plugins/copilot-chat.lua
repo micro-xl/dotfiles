@@ -10,8 +10,8 @@ return {
     build = "make tiktoken",       -- Only on MacOS or Linux
     opts = {
       -- https://github.com/CopilotC-Nvim/CopilotChat.nvim/blob/canary/lua/CopilotChat/config.lua
-      model = 'claude-3.5-sonnet', -- Default model to use, see ':CopilotChatModels' for available models (can be specified manually in prompt via $).
-      agent = 'copilot',           -- Default agent to use, see ':CopilotChatAgents' for available agents (can be specified manually in prompt via @).
+      model = 'gpt-4o',  -- Default model to use, see ':CopilotChatModels' for available models (can be specified manually in prompt via $).
+      agent = 'copilot', -- Default agent to use, see ':CopilotChatAgents' for available agents (can be specified manually in prompt via @).
       insert_at_end = true,
       clear_chat_on_new_prompt = false,
       temperature = 0.1, -- GPT result temperature

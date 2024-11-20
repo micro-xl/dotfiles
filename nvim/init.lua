@@ -48,6 +48,7 @@ require('lazy').setup({ -- imports each plugins to easly disable the plugins
   { import = 'plugins.formatting' },
   { import = 'plugins.neogit' },
   -- { import = 'plugins.todo-comment' },
+  -- { import = 'plugins.vim-tmux-navitator' },
   { import = 'plugins.outline' },
   { import = 'plugins.indent-blankline' },
   { import = 'plugins.autopairs' },

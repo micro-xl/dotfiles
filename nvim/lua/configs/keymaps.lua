@@ -70,26 +70,3 @@ vim.keymap.set('n', 'g[', vim.diagnostic.goto_prev, {})
 vim.keymap.set('n', '<C-f>', function()
   vim.api.nvim_feedkeys('/', 'n', false)
 end, { silent = true })
-
--- Terminal
-vim.keymap.set('n', '<C-a>s', function()
-  h_terminal.open_terminal_horizontal()
-end, {})
-vim.keymap.set('n', '<C-a>v', function()
-  h_terminal.open_terminal_vertical()
-end, {})
-vim.keymap.set('n', '<C-a>x', function()
-  if h_terminal.buf_is_terminal(0) == true then
-    vim.cmd 'q!'
-  end
-end, { noremap = true, silent = true })
-vim.keymap.set('t', '<ESC>', '<C-\\><C-n>', { noremap = true })
-vim.keymap.set('t', '<C-a>s', function()
-  h_terminal.open_terminal_horizontal()
-end, {})
-vim.keymap.set('t', '<C-a>v', function()
-  h_terminal.open_terminal_vertical()
-end, {})
-vim.keymap.set('t', '<C-a>x', function()
-  vim.cmd 'q!'
-end, {})
