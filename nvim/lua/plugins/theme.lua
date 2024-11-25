@@ -275,14 +275,14 @@ return {
   {
     -- 'marko-cerovac/material.nvim',
     -- 'navarasu/onedark.nvim',
-    -- 'scottmckendry/cyberdream.nvim',
+    'scottmckendry/cyberdream.nvim',
     -- 'catppuccin/nvim',
-    'rebelot/kanagawa.nvim',
+    -- 'rebelot/kanagawa.nvim',
     event = 'VimEnter',
     config = function()
-      load_kanagawa()
+      -- load_kanagawa()
       -- load_catppuccin()
-      -- load_cyberdream()
+      load_cyberdream()
       -- load_material()
       -- load_onedark()
       -- font : iosevka

@@ -8,12 +8,8 @@ local function save_runner(bufnr, cmd)
     vim.api.nvim_buf_call(bufnr, function()
       vim.api.nvim_command 'write'
     end)
-    local windowRatio = h_window.getCurrentWindowRatio()
-    if windowRatio.height >= windowRatio.width then
-      h_terminal.open_terminal_horizontal(cmd)
-    else
-      h_terminal.open_terminal_vertical(cmd)
-    end
+
+    vim.cmd('VimuxRunCommand("' .. cmd .. '")')
   end
 end
 
@@ -32,6 +28,9 @@ end
 return {
   'm-demare/attempt.nvim',
   cmd = COMMAND,
+  dependencies = {
+    'preservim/vimux',
+  },
   config = function()
     local attempt = require 'attempt'
     attempt.setup {
@@ -39,7 +38,7 @@ return {
       autosave = false,
       list_buffers = true, -- This will make them show on other pickers (like :Telescope buffers)
       initial_content = {
-        py = '',           -- Either string or function that returns the initial content
+        py = '', -- Either string or function that returns the initial content
         c = '',
         cpp = '',
         java = '',
@@ -69,7 +68,10 @@ return {
       -- @type entry { ext = string, filename = string, path = string, creation_date = number }
       attempt.new_select(on_scratch_created)
     end, {
-      desc = 'Create a new scratch buffer'
+      desc = 'Create a new scratch buffer',
+      bang = false,
+      bar = false,
+      nargs = 0,
     })
   end,
 }

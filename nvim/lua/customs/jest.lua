@@ -1,6 +1,4 @@
 local h_path = require 'lib.h-path'
-local h_terminal = require 'lib.h-terminal'
-local h_window = require 'lib.h-window'
 local h_string = require 'lib.h-string'
 local pipe = require('lib.h-function').pipe
 
@@ -9,7 +7,7 @@ return {
     dir = 'customs.jest',
     keys = { '<F5>', '<leader><F5>', '<F6>', '<leader><F6>' },
     dependencies = {
-      "preservim/vimux"
+      'preservim/vimux',
     },
     cmd = {
       'TestSingle',
@@ -25,8 +23,7 @@ return {
       local function parse_test_suite()
         local current_line = h_string.trim(vim.api.nvim_buf_get_lines(0, vim.fn.line '.' - 1, vim.fn.line '.', false)[1])
         local test_signature = { 'describe', 'it', 'test', 'itLocal' }
-        local test_suite_name = current_line:match('[' ..
-          table.concat(test_signature, '') .. ']+' .. "%([\"']([^']+)[\"'].-[,%)%s]")
+        local test_suite_name = current_line:match('[' .. table.concat(test_signature, '') .. ']+' .. "%([\"']([^']+)[\"'].-[,%)%s]")
         if test_suite_name == nil then
           return nil
         end
@@ -47,13 +44,13 @@ return {
         test_name = string.gsub(test_name, '%)', '\\)')
 
         local command = (options.inspect == true and 'env NODE_OPTIONS="$(echo $NODE_OPTIONS) --inspect" ' or ' ')
-            .. 'pnpm '
-            .. TEST_COMMAND
-            .. (options.watch == true and ' --watch ' or ' ')
-            .. '-t '
-            .. test_name
-            .. ' '
-            .. file_name
+          .. 'pnpm '
+          .. TEST_COMMAND
+          .. (options.watch == true and ' --watch ' or ' ')
+          .. '-t '
+          .. test_name
+          .. ' '
+          .. file_name
         return command
       end
 
@@ -103,8 +100,7 @@ return {
         end
         local cd_cmd = 'cd ' .. test_module_root
         local cli_cmd = build_command(test_name, h_path.get_current_file_path(), options)
-        local escape_unnecessary_chars = pipe(h_string.escape_double_quote, h_string.escape_dollar_sign,
-          h_string.escape_question_mark)
+        local escape_unnecessary_chars = pipe(h_string.escape_double_quote, h_string.escape_dollar_sign, h_string.escape_question_mark)
         local system_copy_cmd = 'echo "' .. cd_cmd .. ' && ' .. escape_unnecessary_chars(cli_cmd) .. '" | pbcopy'
         vim.fn.system(system_copy_cmd)
       end
