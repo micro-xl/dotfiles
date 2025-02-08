@@ -106,7 +106,7 @@ return {
             },
           },
         },
-        tsserver = {
+        tl_ls = {
           on_attach = function(client, bufnr)
             vim.api.nvim_create_user_command('TsOrganizeImport', function()
               h_lsp.ts.organize_import(bufnr, h_path.get_current_file_path())
