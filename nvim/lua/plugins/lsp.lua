@@ -108,7 +108,7 @@ return {
         },
         tl_ls = {
           on_attach = function(client, bufnr)
-            vim.api.nvim_create_user_command('TsOrganizeImport', function()
+            vim.api.nvim_create_user_command('TSOrganizeImport', function()
               h_lsp.ts.organize_import(bufnr, h_path.get_current_file_path())
             end, {})
           end,
@@ -132,6 +132,20 @@ return {
               generateReturnInDocTemplate = true,
             },
           },
+        },
+        pyright = {
+          filetypes = { 'python' },
+          settings = {
+            python = {
+              analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = 'openFilesOnly',
+                useLibraryCodeForTypes = true,
+              },
+            },
+          },
+          root_dir = require('lspconfig').util.root_pattern('pyproject.toml', '.git'),
+          cmd = { 'pyright-langserver', '--stdio' },
         },
         svelte = {
           root_dir = require('lspconfig').util.root_pattern('package.json', 'tsconfig.json', 'jsconfig.json', '.git'),
