@@ -1,13 +1,13 @@
 return {
   {
-    "CopilotC-Nvim/CopilotChat.nvim",
+    'CopilotC-Nvim/CopilotChat.nvim',
     event = 'VeryLazy',
-    branch = "canary",
+    branch = 'main',
     dependencies = {
-      { "github/copilot.vim" },    -- or zbirenbaum/copilot.lua
-      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+      { 'github/copilot.vim' },    -- or zbirenbaum/copilot.lua
+      { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
     },
-    build = "make tiktoken",       -- Only on MacOS or Linux
+    build = 'make tiktoken',       -- Only on MacOS or Linux
     opts = {
       -- https://github.com/CopilotC-Nvim/CopilotChat.nvim/blob/canary/lua/CopilotChat/config.lua
       model = 'gpt-4o',  -- Default model to use, see ':CopilotChatModels' for available models (can be specified manually in prompt via $).
@@ -20,31 +20,56 @@ return {
           normal = '<C-r>',
           insert = '<C-r>',
         },
-      }
+      },
     },
     -- See Commands section for default commands if you want to lazy load on them
     keys = {
       {
-        "<leader>aa",
+        '<leader>af',
         function()
-          local input = vim.fn.input("CopilotChat Question: ")
-          if input ~= "" then
-            require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+          local file = vim.fn.expand '%:p' -- 현재 파일의 전체 경로
+          if file == '' then
+            vim.notify 'No file opened'
+            return
           end
+          local cmd = 'git diff HEAD -- ' .. file
+          local output = vim.fn.systemlist(cmd) -- git diff 실행
+          require('CopilotChat').ask(
+            '#buffer\n'
+            .. 'This is the diff between the current file and the most recent commit\n'
+            .. '```\n'
+            .. table.concat(output, '\n')
+            .. '```\n'
+            .. 'Infer the intent of the code changes and provide auto-completion.\n'
+            .. 'As a result, suggest the completion and show the intent of the changes that you infered.\n',
+            {
+              selection = require('CopilotChat.select').buffer,
+            }
+          )
         end,
-        desc = "CopilotChat - Question with current buffer"
+        desc = 'Analyze the intent through git diff and provide auto-completion',
       },
       {
-        mode = "v",
-        "<leader>aa",
+        '<leader>aa',
         function()
-          local input = vim.fn.input("CopilotChat Question: ")
-          if input ~= "" then
-            require("CopilotChat").ask(input, { selection = require("CopilotChat.select").visual })
+          local input = vim.fn.input 'CopilotChat Question: '
+          if input ~= '' then
+            require('CopilotChat').ask(input, { selection = require('CopilotChat.select').buffer })
           end
         end,
-        desc = "CopilotChat - Question with visual selection"
-      }
-    }
+        desc = 'CopilotChat - Question with current buffer',
+      },
+      {
+        mode = 'v',
+        '<leader>aa',
+        function()
+          local input = vim.fn.input 'CopilotChat Question: '
+          if input ~= '' then
+            require('CopilotChat').ask(input, { selection = require('CopilotChat.select').visual })
+          end
+        end,
+        desc = 'CopilotChat - Question with visual selection',
+      },
+    },
   },
 }

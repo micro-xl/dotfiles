@@ -25,10 +25,8 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({ -- imports each plugins to easly disable the plugins
-  -- { import = 'plugins' },
-  { import = 'customs.jest' },
-  { import = 'customs.pbcopy' },
-  { import = 'customs.translate' },
+  { import = 'customs.my-jest.spec' },
+  { import = 'customs.my-translate.spec' },
   { import = 'plugins.cmp' },
   { import = 'plugins.lsp' },
   { import = 'plugins.oil' },
@@ -54,6 +52,7 @@ require('lazy').setup({ -- imports each plugins to easly disable the plugins
   { import = 'plugins.autopairs' },
   { import = 'plugins.render-markdown' },
   { import = 'plugins.copilot' },
+  { import = 'plugins.nvim-scrollbar' },
   -- { import = 'plugins.avante' },
   { import = 'plugins.copilot-chat' },
   { import = 'plugins.attempt' },
