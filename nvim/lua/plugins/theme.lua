@@ -20,9 +20,11 @@ function load_kanagawa()
   kanagawa.load 'wave' -- dragon | wave | lotus
   vim.api.nvim_set_hl(0, 'Normal', { bg = 'none', fg = '#787878' })
   vim.api.nvim_set_hl(0, 'LineNr', { fg = '#787878', bg = 'none' })
-  vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#787878' })
+  vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#ca8498' })
+  vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = '#ca8498' })
   vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'none', fg = 'none' })
   vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'none', fg = '#ca8498' })
+  vim.api.nvim_set_hl(0, 'VertSplit', { bg = 'none', fg = '#ca8498' })
   vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none', fg = '#ca8498' })
   vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
   vim.api.nvim_set_hl(0, 'FloatTitle', { bg = 'none', fg = '#FFFFFF' })
@@ -275,14 +277,14 @@ return {
   {
     -- 'marko-cerovac/material.nvim',
     -- 'navarasu/onedark.nvim',
-    'scottmckendry/cyberdream.nvim',
+    -- 'scottmckendry/cyberdream.nvim',
     -- 'catppuccin/nvim',
-    -- 'rebelot/kanagawa.nvim',
+    'rebelot/kanagawa.nvim',
     event = 'VimEnter',
     config = function()
-      -- load_kanagawa()
+      load_kanagawa()
       -- load_catppuccin()
-      load_cyberdream()
+      -- load_cyberdream()
       -- load_material()
       -- load_onedark()
       -- font : iosevka

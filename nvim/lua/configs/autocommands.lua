@@ -19,22 +19,3 @@ vim.api.nvim_create_autocmd('CursorHold', {
     vim.diagnostic.open_float {}
   end,
 })
-do -- Remeber folds when open and close buffer;
-  local remember_folds_augroup = vim.api.nvim_create_augroup('remember_folds', {})
-  vim.api.nvim_create_autocmd('BufWinLeave', {
-    group = remember_folds_augroup,
-    callback = function()
-      pcall(function()
-        vim.cmd 'mkview'
-      end)
-    end,
-  })
-  vim.api.nvim_create_autocmd('BufWinEnter', {
-    group = remember_folds_augroup,
-    callback = function()
-      pcall(function()
-        vim.cmd('loadview', { silent = true })
-      end)
-    end,
-  })
-end

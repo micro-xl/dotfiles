@@ -53,8 +53,8 @@ require('lazy').setup({ -- imports each plugins to easly disable the plugins
   { import = 'plugins.render-markdown' },
   { import = 'plugins.copilot' },
   { import = 'plugins.nvim-scrollbar' },
-  -- { import = 'plugins.avante' },
-  { import = 'plugins.copilot-chat' },
+  { import = 'plugins.avante' },
+  -- { import = 'plugins.copilot-chat' },
   { import = 'plugins.attempt' },
 }, {
   ui = {
