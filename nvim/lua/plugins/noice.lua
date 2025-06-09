@@ -4,7 +4,7 @@ return {
     event = 'VeryLazy',
     dependencies = {
       { 'MunifTanjim/nui.nvim' },
-      -- 'rcarriga/nvim-notify',
+      'rcarriga/nvim-notify',
     },
     config = function()
       require('noice').setup {
@@ -22,8 +22,8 @@ return {
           enabled = true,
           view = 'mini',
           -- Or can use each implementation for specific situation
-          view_error = 'messages', -- view for errors
-          view_warn = 'notify', -- view for warnings
+          view_error = 'messages',     -- view for errors
+          view_warn = 'notify',        -- view for warnings
           -- view_history = 'messages', -- view for :messages
           view_search = 'virtualtext', -- view for search count messages. Set to `false` to disable
         },
@@ -51,12 +51,11 @@ return {
           bottom_search = false, -- use a classic bottom cmdline for search
           -- command_palette = true, -- position the cmdline and popupmenu together
           -- long_message_to_split = true, -- long messages will be sent to a split
-          inc_rename = false, -- enables an input dialog for inc-rename.nvim
+          inc_rename = false,    -- enables an input dialog for inc-rename.nvim
           lsp_doc_border = true, -- add a border to hover docs and signature help
         },
       }
       vim.api.nvim_set_hl(0, 'NoiceCmdlinePopupBorder', { link = 'FloatBorder' }) -- command line border color
-      LOG '[LOADED] noice'
     end,
   },
 }

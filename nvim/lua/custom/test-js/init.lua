@@ -1,13 +1,15 @@
 local h_path = require 'lib.h-path'
-local h_string = require 'lib.h-string'
+local h_string = require 'lib.string'
 local pipe = require('lib.h-function').pipe
 
+--- @class TestJs
 local M = {}
 
--- @param {table} opts
--- @param {string} opts.test_command - test command to run
+--- @class TestJsOptions
+--- @field test_command string - command to run tests, default is 'jest'
+
+--- @param opts TestJsOptions
 function M.setup(opts)
-  print 'asdfasdfasdfasddsf'
   local test_command = opts.test_command or 'jest'
 
   local function parse_test_suite()

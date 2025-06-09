@@ -1,5 +1,5 @@
 local exec = require('lib.h-shell').exec
-local trim = require('lib.h-string').trim
+local trim = require('lib.string').trim
 
 --[[ Telescope provides a  Fuzzy Finder for files, lsp, etc ]]
 

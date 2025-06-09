@@ -1,17 +1,16 @@
 local h_shell = require 'lib.h-shell'
 local h_buffer = require 'lib.h-buffer'
-local h_string = require 'lib.h-string'
+local h_string = require 'lib.string'
 local h_list = require 'lib.h-list'
 local pipe = require('lib.h-function').pipe
 
---[[ translate visual selection ]]
-
+--- @class Translaty
 local M = {}
 
--- @param {string} target
--- @param {string} from
--- @param {string} to
-function translate(target, from, to)
+--- @param target string text to translate
+--- @param from string language code to translate from
+--- @param to string language code to translate to
+function M.translate(target, from, to)
   local escape = pipe(h_string.escape_dollar_sign, h_string.escape_double_quote, h_string.trim)
   local cmd = 'trans '
     .. '-b '
@@ -34,21 +33,26 @@ function translate(target, from, to)
   return stdout
 end
 
--- @param {table} opts
--- @param {table} opts.lang
--- @param {string} opts.lang.from
--- @param {string} opts.lang.to
--- @param {table} opts.keys - configs for keymaps
--- @param {string} opts.keys.trigger - keymap for visual mode
--- @param {string} opts.keys.quit - keymap for quit on the result buffer
+local function ensure_trans_installed()
+  if vim.fn.executable 'trans' == 0 then
+    error 'trnaslate command is not installed. Please install translate-shell.'
+  end
+end
+
+--- @class TranslatyOpts
+--- @field lang { from: string, to: string }
+--- @field keymaps { tranlate_selected: string, quit: string }
+
+--- @param opts TranslatyOpts
 M.setup = function(opts)
+  ensure_trans_installed()
   local from_lang = opts.lang.from or 'en'
   local to_lang = opts.lang.to or 'ko'
-  local trigger_keymap = opts.keys.trigger or 'tl'
-  local quit_keymap = opts.keys.quit or 'q'
+  local trigger_keymap = opts.keymaps.tranlate_selected or 'tl'
+  local quit_keymap = opts.keymaps.quit or 'q'
   vim.keymap.set('x', trigger_keymap, function()
     local selected = h_buffer.get_visual_selection()
-    local stdout = translate(selected, from_lang, to_lang)
+    local stdout = M.translate(selected, from_lang, to_lang)
     local lines = h_list.map(vim.split(h_string.trim(stdout), '\n'), h_string.trim)
     local bufnr = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_open_win(bufnr, true, {

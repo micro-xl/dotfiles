@@ -4,13 +4,13 @@ return {
     event = 'VeryLazy',
     branch = 'main',
     dependencies = {
-      { 'github/copilot.vim' },    -- or zbirenbaum/copilot.lua
+      { 'github/copilot.vim' }, -- or zbirenbaum/copilot.lua
       { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
     },
-    build = 'make tiktoken',       -- Only on MacOS or Linux
+    build = 'make tiktoken', -- Only on MacOS or Linux
     opts = {
       -- https://github.com/CopilotC-Nvim/CopilotChat.nvim/blob/canary/lua/CopilotChat/config.lua
-      model = 'gpt-4o',  -- Default model to use, see ':CopilotChatModels' for available models (can be specified manually in prompt via $).
+      model = 'gpt-4o', -- Default model to use, see ':CopilotChatModels' for available models (can be specified manually in prompt via $).
       agent = 'copilot', -- Default agent to use, see ':CopilotChatAgents' for available agents (can be specified manually in prompt via @).
       insert_at_end = true,
       clear_chat_on_new_prompt = false,
@@ -36,12 +36,12 @@ return {
           local output = vim.fn.systemlist(cmd) -- git diff 실행
           require('CopilotChat').ask(
             '#buffer\n'
-            .. 'This is the diff between the current file and the most recent commit\n'
-            .. '```\n'
-            .. table.concat(output, '\n')
-            .. '```\n'
-            .. 'Infer the intent of the code changes and provide auto-completion.\n'
-            .. 'As a result, suggest the completion and show the intent of the changes that you infered.\n',
+              .. 'This is the diff between the current file and the most recent commit\n'
+              .. '```\n'
+              .. table.concat(output, '\n')
+              .. '```\n'
+              .. 'Infer the intent of the code changes and provide auto-completion.\n'
+              .. 'As a result, suggest the completion and show the intent of the changes that you infered.\n',
             {
               selection = require('CopilotChat.select').buffer,
             }
@@ -71,5 +71,6 @@ return {
         desc = 'CopilotChat - Question with visual selection',
       },
     },
+    enabled = false,
   },
 }

@@ -76,9 +76,13 @@ end
 
 mod.concat = function(table_a, table_b)
   local result = {}
-  mod.map(table_a, function(v) table.insert(result, v) end)
-  mod.map(table_b, function(v) table.insert(result, v) end)
-  return result;
+  mod.map(table_a, function(v)
+    table.insert(result, v)
+  end)
+  mod.map(table_b, function(v)
+    table.insert(result, v)
+  end)
+  return result
 end
 
 mod.slice = function(_table, start, finish)
@@ -94,16 +98,18 @@ mod.slice = function(_table, start, finish)
 end
 
 mod.include = function(table_a, value)
-  return mod.find(table_a, function(v) return v == value end) ~= nil
+  return mod.find(table_a, function(v)
+    return v == value
+  end) ~= nil
 end
 
 mod.join = function(table_a, separator)
   return mod.reduce(table_a, function(acc, v, i)
-    if (i == 1) then
+    if i == 1 then
       return v
     end
     return acc .. separator .. v
   end, '')
 end
 
-return mod;
+return mod

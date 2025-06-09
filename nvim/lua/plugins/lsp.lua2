@@ -17,7 +17,6 @@ return {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       { -- Configures Lua Lsp for Neovim config, including lua-language-server (completion, annotations and signature of Neovim api)
         'folke/neodev.nvim',
-        config = true,
       },
     },
     config = function()
@@ -96,9 +95,6 @@ return {
           -- capabilities = {},
           settings = {
             Lua = {
-              diagnostics = {
-                globals = { 'LOG' },
-              },
               completion = {
                 callSnippet = 'Replace',
               },
@@ -187,7 +183,6 @@ return {
           end,
         },
       }
-      LOG '[LOADED] lsp'
     end,
   },
 }

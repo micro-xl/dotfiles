@@ -12,6 +12,5 @@ return {
         border = 'rounded',
       },
     }
-    LOG '[LOADED] dressing'
   end,
 }

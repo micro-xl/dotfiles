@@ -55,7 +55,6 @@ return {
         inactive_winbar = {},
         extensions = {},
       }
-      LOG '[LOADED] lualine'
     end,
   },
 }

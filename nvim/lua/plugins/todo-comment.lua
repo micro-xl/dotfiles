@@ -6,5 +6,6 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = { signs = true },
+    enabled = false,
   },
 }

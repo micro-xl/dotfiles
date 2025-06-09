@@ -1,78 +1,37 @@
---[[ Gloval variables ]]
-vim.g.mapleader = ','
-vim.g.maplocalleader = ','
-vim.g.have_nerd_font = true
+--[[ Configs ]]
+require('config.options').setup()
+require('config.autocommands').setup()
+require 'config.diagnostics'
 
-local DEBUG = false
-function LOG(message)
-  if DEBUG == true then
-    vim.notify(vim.inspect(message))
-  end
+require('config.keymaps').setup {
+  keymap_delete_current_buffer_force = '<leader>bd',
+  keymap_close_other_buffers = '<leader>bc',
+  keymap_previous_buffer = '<leader>[',
+  keymap_next_buffer = '<leader>]',
+  keymap_search = '<C-f>',
+}
+
+if vim.fn.has("nvim-0.11.2") ~= 1 then
+  error("Neovim ≥0.11.2 required (current " ..
+    vim.version().major .. "." .. vim.version().minor .. "." .. vim.version().patch .. ")")
 end
 
---[[ Configs ]]
-require 'configs.options'
-require 'configs.keymaps'
-require 'configs.autocommands'
-require 'configs.diagnostics'
 
 --[[ Plugins ]]
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
-  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-  vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
-end ---@diagnostic disable-next-line: undefined-field
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out,                            "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
+end
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup({ -- imports each plugins to easly disable the plugins
-  { import = 'customs.my-jest.spec' },
-  { import = 'customs.my-translate.spec' },
-  { import = 'plugins.cmp' },
-  { import = 'plugins.lsp' },
-  { import = 'plugins.oil' },
-  { import = 'plugins.theme' },
-  { import = 'plugins.noice' },
-  { import = 'plugins.comment' },
-  { import = 'plugins.lualine' },
-  { import = 'plugins.dressing' },
-  { import = 'plugins.gitsigns' },
-  { import = 'plugins.neo-tree' },
-  { import = 'plugins.which-key' },
-  { import = 'plugins.telescope' },
-  { import = 'plugins.dashboard' },
-  { import = 'plugins.vim-sleuth' },
-  { import = 'plugins.bufferline' },
-  { import = 'plugins.treesitter' },
-  { import = 'plugins.formatting' },
-  { import = 'plugins.neogit' },
-  -- { import = 'plugins.todo-comment' },
-  -- { import = 'plugins.vim-tmux-navitator' },
-  { import = 'plugins.outline' },
-  { import = 'plugins.indent-blankline' },
-  { import = 'plugins.autopairs' },
-  { import = 'plugins.render-markdown' },
-  { import = 'plugins.copilot' },
-  { import = 'plugins.nvim-scrollbar' },
-  { import = 'plugins.avante' },
-  -- { import = 'plugins.copilot-chat' },
-  { import = 'plugins.attempt' },
-}, {
-  ui = {
-    icons = vim.g.have_nerd_font and {} or {
-      cmd = '⌘',
-      config = '🛠',
-      event = '📅',
-      ft = '📂',
-      init = '⚙',
-      keys = '🗝',
-      plugin = '🔌',
-      runtime = '💻',
-      require = '🌙',
-      source = '📄',
-      start = '🚀',
-      task = '📌',
-      lazy = '💤 ',
-    },
-    border = 'rounded',
-  },
-})
+require('lazy').setup('plugins', { ui = { border = 'rounded' } })

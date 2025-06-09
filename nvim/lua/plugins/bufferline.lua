@@ -8,7 +8,6 @@ return {
     },
     config = function()
       require('bufferline').setup {}
-      LOG '[LOADED] bufferline'
     end,
   },
 }
