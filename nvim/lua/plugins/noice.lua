@@ -22,7 +22,7 @@ return {
           enabled = true,
           view = 'mini',
           -- Or can use each implementation for specific situation
-          view_error = 'messages',     -- view for errors
+          view_error = 'notify',       -- view for errors
           view_warn = 'notify',        -- view for warnings
           -- view_history = 'messages', -- view for :messages
           view_search = 'virtualtext', -- view for search count messages. Set to `false` to disable
