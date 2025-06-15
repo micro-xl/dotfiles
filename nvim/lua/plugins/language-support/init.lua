@@ -10,6 +10,7 @@ return {
       'folke/neodev.nvim',
       'mason-org/mason.nvim',
       'mason-org/mason-lspconfig.nvim',
+      'ibhagwan/fzf-lua',
     },
     config = function()
       vim.lsp.set_log_level(vim.log.levels.TRACE)
