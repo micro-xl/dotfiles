@@ -9,7 +9,10 @@ local M = {}
 function M.setup(opts)
   if opts.use_nvim_cmp_capabilities then
     vim.lsp.config('*', {
-      capabilities = require('cmp_nvim_lsp').default_capabilities()
+      capabilities = require('cmp_nvim_lsp').default_capabilities(),
+      on_attach = function(client, bufnr)
+        require('custom.easy-lsp.keymap').setup(client, bufnr)
+      end,
     })
   end
 
