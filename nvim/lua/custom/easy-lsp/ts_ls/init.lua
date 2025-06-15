@@ -8,6 +8,7 @@ return {
   --- @param bufnr number
   on_attach = function(client, bufnr)
     require('custom.easy-lsp.ts_ls.command').setup(client, bufnr)
+    require('custom.easy-lsp.keymap').setup(client, bufnr)
   end,
   filetypes = {
     'typescript',
@@ -37,12 +38,12 @@ return {
     },
   },
   root_markers = {
-    { 'pnpm-lock.yaml', 'yarn.lock', 'package-lock.json' },
-    {
-      'package.json',
-      'tsconfig.json',
-      'jsconfig.json',
-    },
+    'pnpm-lock.yaml',
+    'yarn.lock',
+    'package-lock.json',
+    'package.json',
+    'tsconfig.json',
+    'jsconfig.json',
     '.git',
   },
 }

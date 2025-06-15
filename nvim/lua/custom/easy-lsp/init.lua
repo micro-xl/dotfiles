@@ -5,10 +5,12 @@ local M = {}
 --- @field use_nvim_cmp_capabilities boolean
 --- @field use_mason boolean
 
+
 --- @param opts EasyLspOpts
 function M.setup(opts)
   if opts.use_nvim_cmp_capabilities then
     vim.lsp.config('*', {
+      -- It will be overridden by each server's on_attach function.
       capabilities = require('cmp_nvim_lsp').default_capabilities(),
       on_attach = function(client, bufnr)
         require('custom.easy-lsp.keymap').setup(client, bufnr)
