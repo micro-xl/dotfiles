@@ -1,3 +1,5 @@
+--- Add the type document using EmmyLua AI!
+
 local M = {}
 
 local function make_openai_request(context, provider_config, callback)
@@ -40,7 +42,7 @@ curl -s -X POST "https://api.openai.com/v1/chat/completions" \
       if data and #data > 0 then
         local response_text = table.concat(data, '\n')
         local ok, response = pcall(vim.json.decode, response_text)
-        
+
         if ok and response.choices and #response.choices > 0 then
           local completion = response.choices[1].message.content
           if completion and completion ~= '' then
@@ -96,7 +98,7 @@ curl -s -X POST "https://api.anthropic.com/v1/messages" \
       if data and #data > 0 then
         local response_text = table.concat(data, '\n')
         local ok, response = pcall(vim.json.decode, response_text)
-        
+
         if ok and response.content and #response.content > 0 then
           local completion = response.content[1].text
           if completion and completion ~= '' then
