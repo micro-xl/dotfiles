@@ -1,7 +1,25 @@
---- Add the type document using EmmyLua AI!
+---@class Context
+---@field context string The surrounding code context
+---@field prefix string The current line prefix up to cursor
+---@field filetype string The file type/language
+---@field filename string The file name/path
+
+---@class ProviderConfig
+---@field api_key string The API key for the provider
+---@field model string The model name to use
+---@field max_tokens number Maximum tokens in response
+
+---@alias CompletionCallback fun(suggestions: string[]): nil
+
+---@class Provider
+---@field complete fun(context: Context, config: ProviderConfig, callback: CompletionCallback): nil
 
 local M = {}
 
+---Make a completion request to OpenAI API
+---@param context Context
+---@param provider_config ProviderConfig
+---@param callback CompletionCallback
 local function make_openai_request(context, provider_config, callback)
   local prompt = string.format([[
 You are a code completion assistant. Given the following context, provide a short, relevant code completion.
@@ -59,6 +77,10 @@ curl -s -X POST "https://api.openai.com/v1/chat/completions" \
   })
 end
 
+---Make a completion request to Anthropic API
+---@param context Context
+---@param provider_config ProviderConfig
+---@param callback CompletionCallback
 local function make_anthropic_request(context, provider_config, callback)
   local prompt = string.format([[
 You are a code completion assistant. Given the following context, provide a short, relevant code completion.
@@ -124,10 +146,15 @@ local providers = {
   },
 }
 
+---Get a provider by name
+---@param name string The provider name
+---@return Provider|nil
 function M.get_provider(name)
   return providers[name]
 end
 
+---List all available provider names
+---@return string[]
 function M.list_providers()
   return vim.tbl_keys(providers)
 end
