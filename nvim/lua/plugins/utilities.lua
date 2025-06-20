@@ -39,13 +39,6 @@ return {
     dir = custom_module_path .. 'inline-completion',
     name = 'custom/inline-completion',
     config = function()
-      require('custom.inline-completion').setup {
-        keymaps = {
-          accept = '<C-y>',
-          next_suggestion = '<C-e>',
-          prev_suggestion = '<C-q>'
-        }
-      }
     end
   }
 }

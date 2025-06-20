@@ -8,7 +8,7 @@ local config = {
   provider = 'openai',
   auto_trigger = true,
   trigger_delay = 1000,
-  filetypes = { 'lua', 'javascript', 'typescript', 'python', 'go', 'rust' },
+  filetypes = { 'lua' },
   keymaps = {
     accept = '<Tab>',
     reject = '<C-c>',
@@ -110,24 +110,27 @@ local function prev_suggestion()
   show_suggestion(state.suggestions[state.suggestion_index])
 end
 
+--- @return Context
 local function get_context()
   local bufnr = vim.api.nvim_get_current_buf()
   local cursor = vim.api.nvim_win_get_cursor(0)
   local row = cursor[1] - 1
   local col = cursor[2]
 
-  -- Get surrounding context
-  local start_row = math.max(0, row - 10)
-  local end_row = math.min(vim.api.nvim_buf_line_count(bufnr) - 1, row + 5)
-  local lines = vim.api.nvim_buf_get_lines(bufnr, start_row, end_row + 1, false)
+  -- Get entire buffer content
+  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+
+  -- Insert {{COMPLETE_HERE}} marker at cursor position
+  local current_line = lines[row + 1] or ''
+  local prefix = current_line:sub(1, col)
+  local suffix = current_line:sub(col + 1)
+
+  lines[row + 1] = prefix .. '{{COMPLETE_HERE}}' .. suffix
 
   local context = table.concat(lines, '\n')
-  local current_line = vim.api.nvim_buf_get_lines(bufnr, row, row + 1, false)[1] or ''
-  local prefix = current_line:sub(1, col)
 
   return {
-    context = context,
-    prefix = prefix,
+    uncompleted = context,
     filetype = vim.bo[bufnr].filetype,
     filename = vim.api.nvim_buf_get_name(bufnr),
   }
@@ -161,12 +164,13 @@ local function request_completion()
   end)
 end
 
+
 local function is_supported_filetype()
   local current_ft = vim.bo.filetype
   if not config.filetypes or #config.filetypes == 0 then
     return true
   end
-  
+
   for _, ft in ipairs(config.filetypes) do
     if ft == current_ft then
       return true
@@ -217,10 +221,10 @@ end
 local function setup_autocmds()
   local group = vim.api.nvim_create_augroup('InlineCompletion', { clear = true })
 
-  vim.api.nvim_create_autocmd({ 'TextChangedI' }, {
-    group = group,
-    callback = trigger_completion,
-  })
+  -- vim.api.nvim_create_autocmd({ 'CursorHoldI' }, {
+  --   group = group,
+  --   callback = trigger_completion,
+  -- })
 
   vim.api.nvim_create_autocmd({ 'InsertLeave', 'BufLeave' }, {
     group = group,

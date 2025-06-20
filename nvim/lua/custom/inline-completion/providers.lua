@@ -1,6 +1,5 @@
 ---@class Context
----@field context string The surrounding code context
----@field prefix string The current line prefix up to cursor
+---@field uncompleted string The text to complete
 ---@field filetype string The file type/language
 ---@field filename string The file name/path
 
@@ -22,27 +21,36 @@ local M = {}
 ---@param callback CompletionCallback
 local function make_openai_request(context, provider_config, callback)
   local prompt = string.format([[
-You are a code completion assistant. Given the following context, provide a short, relevant code completion.
+You are a code completion assistant. User gives a uncompleted code. The part you need to complete is labeled {{COMPLETE_HERE}} in the text. Answer the replacing_code to replace the labeled.
 
-File: %s
-Language: %s
-Context:
-%s
-
-Current prefix: %s
-
-Provide only the completion text, no explanations. Keep it concise and relevant.
-]], context.filename, context.filetype, context.context, context.prefix)
+Filename: %s
+Filetype: %s
+]], context.filename, context.filetype)
 
   local body = vim.json.encode({
     model = provider_config.model,
     messages = {
+      {
+        role = "system",
+        content = prompt
+      },
       {
         role = "user",
         content = prompt
       }
     },
     max_tokens = provider_config.max_tokens,
+    response_format = {
+      type = "json_schema",
+      json_schema = {
+        type = "object",
+        properties = {
+          replacing_code = {
+            type = "string"
+          }
+        }
+      }
+    },
     temperature = 0.3,
     stream = false
   })
@@ -70,6 +78,7 @@ curl -s -X POST "https://api.openai.com/v1/chat/completions" \
       end
     end,
     on_stderr = function(_, data)
+      vim.notify("OpenAI Error " .. _)
       if data and #data > 0 then
         vim.notify('OpenAI API error: ' .. table.concat(data, '\n'), vim.log.levels.ERROR)
       end
@@ -83,22 +92,20 @@ end
 ---@param callback CompletionCallback
 local function make_anthropic_request(context, provider_config, callback)
   local prompt = string.format([[
-You are a code completion assistant. Given the following context, provide a short, relevant code completion.
+You are a code completion assistant. User gives a uncompleted code. The part you need to complete is labeled {{COMPLETE_HERE}} in the text.
 
-File: %s
-Language: %s
-Context:
-%s
-
-Current prefix: %s
-
-Provide only the completion text, no explanations. Keep it concise and relevant.
-]], context.filename, context.filetype, context.context, context.prefix)
+Filename: %s
+Filetype: %s
+]], context.filename, context.filetype)
 
   local body = vim.json.encode({
     model = provider_config.model,
     max_tokens = provider_config.max_tokens,
     messages = {
+      {
+        role = "system",
+        content = prompt
+      },
       {
         role = "user",
         content = prompt
