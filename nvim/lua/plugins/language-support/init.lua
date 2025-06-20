@@ -13,7 +13,7 @@ return {
       'ibhagwan/fzf-lua',
     },
     config = function()
-      vim.lsp.set_log_level(vim.log.levels.TRACE)
+      vim.lsp.set_log_level(vim.log.levels.OFF)
       --- Map mason package names to vim lsp sever names
       require('custom.easy-lsp').setup {
         use_nvim_cmp_capabilities = true,

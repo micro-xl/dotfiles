@@ -1,6 +1,7 @@
 return {
   {
     'github/copilot.vim',
+    enabled = false,
     config = function()
       vim.g.copilot_no_tap_map = true
       vim.g.copilot_filetype = {
