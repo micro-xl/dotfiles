@@ -8,6 +8,7 @@ local config = {
   provider = 'openai',
   auto_trigger = true,
   trigger_delay = 1000,
+  filetypes = { 'lua', 'javascript', 'typescript', 'python', 'go', 'rust' },
   keymaps = {
     accept = '<Tab>',
     reject = '<C-c>',
@@ -160,8 +161,22 @@ local function request_completion()
   end)
 end
 
+local function is_supported_filetype()
+  local current_ft = vim.bo.filetype
+  if not config.filetypes or #config.filetypes == 0 then
+    return true
+  end
+  
+  for _, ft in ipairs(config.filetypes) do
+    if ft == current_ft then
+      return true
+    end
+  end
+  return false
+end
+
 local function trigger_completion()
-  if not config.auto_trigger then
+  if not config.auto_trigger or not is_supported_filetype() then
     return
   end
 
@@ -265,7 +280,11 @@ function M.setup(opts)
   })
 
   vim.api.nvim_create_user_command('InlineCompletionRequest', function()
-    request_completion()
+    if is_supported_filetype() then
+      request_completion()
+    else
+      vim.notify('Inline completion not supported for filetype: ' .. vim.bo.filetype, vim.log.levels.WARN)
+    end
   end, { desc = 'Manually request completion' })
 end
 
