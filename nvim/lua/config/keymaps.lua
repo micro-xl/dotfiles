@@ -77,8 +77,10 @@ function M.setup(opts)
   end
 
   vim.keymap.set('n', '*', '*N', { silent = true, desc = 'Find occurrences of word under cursor' })
-  vim.keymap.set('v', '*', "y/\\V<C-R>=escape(@\",'/')<CR><CR>N", { silent = true, desc = 'Find occurrences of selection' })
-  vim.keymap.set('n', opts.keymap_delete_current_buffer_force, ':bd!<CR>', { silent = true, desc = 'Force delete current buffer' })
+  vim.keymap.set('v', '*', "y/\\V<C-R>=escape(@\",'/')<CR><CR>N",
+    { silent = true, desc = 'Find occurrences of selection' })
+  vim.keymap.set('n', opts.keymap_delete_current_buffer_force, ':bd!<CR>',
+    { silent = true, desc = 'Force delete current buffer' })
 
   -- Tab Navigation
   vim.keymap.set('n', opts.keymap_next_tab, ':tabnext<CR>', { silent = true, desc = 'Go to next tab' })
@@ -98,13 +100,15 @@ function M.setup(opts)
     vim.keymap.set('n', '<C-s>', ':w<CR>', { silent = true, desc = 'Save current buffer' })
   end
 
-  print(opts.keymap_previous_buffer)
   vim.keymap.set('n', opts.keymap_previous_buffer, ':bp<CR>', { silent = true, desc = 'Go to previous buffer' })
   vim.keymap.set('n', opts.keymap_next_buffer, ':bn<CR>', { silent = true, desc = 'Go to next buffer' })
-  vim.keymap.set('t', opts.keymap_previous_buffer, '<C-\\><C-n>bp<CR>', { silent = true, desc = 'Go to previous buffer in terminal mode' })
-  vim.keymap.set('t', opts.keymap_next_buffer, '<C-\\><C-n>:bn<CR>', { silent = true, desc = 'Go to next buffer in terminal mode' })
+  vim.keymap.set('t', opts.keymap_previous_buffer, '<C-\\><C-n>bp<CR>',
+    { silent = true, desc = 'Go to previous buffer in terminal mode' })
+  vim.keymap.set('t', opts.keymap_next_buffer, '<C-\\><C-n>:bn<CR>',
+    { silent = true, desc = 'Go to next buffer in terminal mode' })
 
-  vim.keymap.set('n', opts.keymap_close_other_buffers, ':%bd|e#|bd#<CR><C-o>', { silent = true, desc = 'Close other buffers' })
+  vim.keymap.set('n', opts.keymap_close_other_buffers, ':%bd|e#|bd#<CR><C-o>',
+    { silent = true, desc = 'Close other buffers' })
 
   if opts.enable_paste_without_yanking then
     vim.keymap.set('x', 'p', '"_dP', { silent = true })
